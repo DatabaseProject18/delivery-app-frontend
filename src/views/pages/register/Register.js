@@ -1,4 +1,3 @@
-import CIcon from "@coreui/icons-react";
 import {
   CButton,
   CCard,
@@ -7,14 +6,12 @@ import {
   CCol,
   CContainer,
   CForm,
-  CInput,
-  CInputGroup,
-  CInputGroupPrepend,
-  CInputGroupText,
   CRow,
 } from "@coreui/react";
 import Joi from "joi";
+import _ from "lodash";
 import React from "react";
+import { toast } from "react-toastify";
 import Form from "../../../components/common/Form";
 import { api } from "../../../services/api";
 import { isLogin } from "../../../services/auth";
@@ -28,7 +25,7 @@ class Register extends Form {
       address: "",
       type: "",
       password: "",
-      confrim_password: "",
+      confirm_password: "",
       contact_no: "",
       registered_date: "",
     },
@@ -48,10 +45,18 @@ class Register extends Form {
       response.result.data.multiple.map((each) => {
         types.push(each.type);
       });
-      this.state.customerTypes = types;
+      const customerTypes = types;
+      this.setState({ customerTypes });
     } else {
       this.props.history.push("/");
     }
+    const data = { ...this.state.data };
+    data.registered_date = this.getCurrentDate();
+    this.setState({ data });
+  }
+
+  componentWillUnmount() {
+    toast.dismiss();
   }
 
   schema = {
@@ -79,9 +84,12 @@ class Register extends Form {
     type: Joi.string().required().label("Customer Type"),
     password: Joi.string().min(5).required().label("Password"),
     confirm_password: Joi.string()
-      .equal(Joi.ref("password"))
+      .custom(this.comparePassword(this.getState()))
       .required()
-      .label("Confrim Password"),
+      .label("Confrim Password")
+      .messages({
+        "any.invalid": "Repeat password does not match with the above password",
+      }),
     contact_no: Joi.string()
       .$.regex(/^[0-9]+$/)
       .rule({
@@ -100,6 +108,19 @@ class Register extends Form {
       .label("Registered Date"),
   };
 
+  comparePassword() {
+    return (value, helper) => {
+      if (value !== this.state.data.password) {
+        return helper.error("any.invalid");
+      }
+      return value;
+    };
+  }
+
+  getState() {
+    return this.state;
+  }
+
   render() {
     return (
       <div className="c-app c-default-layout flex-row align-items-center">
@@ -108,7 +129,7 @@ class Register extends Form {
             <CCol md="9" lg="7" xl="6">
               <CCard className="mx-4">
                 <CCardBody className="p-4">
-                  <CForm>
+                  <CForm onSubmit={this.handleSubmit}>
                     <h1>Register</h1>
                     <p className="text-muted">Create your account</p>
                     {this.renderInputGroup(
@@ -141,47 +162,32 @@ class Register extends Form {
                       "cil-blur",
                       this.state.customerTypes
                     )}
-                    <CInputGroup className="mb-3">
-                      <CInputGroupPrepend>
-                        <CInputGroupText>
-                          <CIcon name="cil-lock-locked" />
-                        </CInputGroupText>
-                      </CInputGroupPrepend>
-                      <CInput
-                        type="password"
-                        placeholder="Password"
-                        autoComplete="new-password"
-                      />
-                    </CInputGroup>
-                    <CInputGroup className="mb-4">
-                      <CInputGroupPrepend>
-                        <CInputGroupText>
-                          <CIcon name="cil-lock-locked" />
-                        </CInputGroupText>
-                      </CInputGroupPrepend>
-                      <CInput
-                        type="password"
-                        placeholder="Repeat password"
-                        autoComplete="new-password"
-                      />
-                    </CInputGroup>
-                    <CButton color="success" block>
-                      Create Account
-                    </CButton>
+                    {this.renderInputGroup(
+                      "contact_no",
+                      "number",
+                      "Contact Number",
+                      "cil-mobile"
+                    )}
+                    {this.renderInputGroup(
+                      "password",
+                      "password",
+                      "Password",
+                      "cil-lock-locked"
+                    )}
+                    {this.renderInputGroup(
+                      "confirm_password",
+                      "password",
+                      "Repeat Password",
+                      "cil-lock-locked"
+                    )}
+                    {this.renderButton("Create Account", "success", "danger")}
                   </CForm>
                 </CCardBody>
                 <CCardFooter className="p-4">
                   <CRow>
-                    <CCol xs="12" sm="6">
-                      <CButton className="btn-facebook mb-1" block>
-                        <span>facebook</span>
-                      </CButton>
-                    </CCol>
-                    <CCol xs="12" sm="6">
-                      <CButton className="btn-twitter mb-1" block>
-                        <span>twitter</span>
-                      </CButton>
-                    </CCol>
+                    <CButton to="/" color="info" className="mb-1" block>
+                      <span>Home</span>
+                    </CButton>
                   </CRow>
                 </CCardFooter>
               </CCard>
@@ -191,6 +197,46 @@ class Register extends Form {
       </div>
     );
   }
+
+  callServer = async () => {
+    this.setState({ spinner: true });
+    const response = await api.auth.register(this.state.data);
+    if (response.resCode === 200) {
+      const response2 = await api.auth.login(
+        _.pick(this.state.data, ["email", "password"])
+      );
+      this.setState({ spinner: false });
+      if (response2.resCode === 200) {
+        localStorage.setItem(
+          "scms-auth-token",
+          response2.result.data.multiple.accessToken
+        );
+        localStorage.setItem(
+          "scms-refresh-token",
+          response2.result.data.multiple.refreshToken
+        );
+        this.props.history.push("/dashboard");
+      } else {
+        this.props.history.push("/login");
+      }
+    } else {
+      if (response.result.error.multiple) {
+        this.setState({ errors: response.result.error.multiple });
+      }
+      if (response.result.error.single) {
+        toast.error(response.result.error.single);
+      }
+      this.setState({ spinner: false });
+    }
+  };
+
+  getCurrentDate = () => {
+    const now = new Date();
+    const date = now.getDate();
+    const month = now.getMonth();
+    const year = now.getFullYear();
+    return `${year}-${month + 1}-${date}`;
+  };
 }
 
 export default Register;

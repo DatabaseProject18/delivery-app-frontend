@@ -5,6 +5,7 @@ import {
   cilGraph,
   cilHome,
   cilLockLocked,
+  cilMobile,
   cilSettings,
   cilSpeech,
   cilSpeedometer,
@@ -24,6 +25,7 @@ export const icons = Object.assign(
     cilGraph,
     cilSettings,
     cilCreditCard,
+    cilMobile,
   },
   {},
   {}

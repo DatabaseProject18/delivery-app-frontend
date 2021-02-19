@@ -10,8 +10,15 @@ const createResult = async (promise) => {
   let result;
   try {
     result = await promise;
-    console.log(result);
   } catch (error) {
+    if (!error.response) {
+      return new Promise((resolve) => {
+        resolve({
+          resCode: 500,
+          result: { error: { single: "Server is not available" } },
+        });
+      });
+    }
     result = error.response;
     if (
       result.error &&
@@ -53,6 +60,9 @@ const createResult = async (promise) => {
 export const api = {
   auth: {
     register: async (data) => {
+      return await createResult(instance.post("register", data));
+    },
+    login: async (data) => {
       return await createResult(instance.post("login", data));
     },
     logout: async (data) => {
