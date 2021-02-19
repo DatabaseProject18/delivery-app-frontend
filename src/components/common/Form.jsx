@@ -2,11 +2,11 @@ import CIcon from "@coreui/icons-react";
 import {
   CButton,
   CFormGroup,
-  CFormText,
   CInput,
   CInputGroup,
   CInputGroupPrepend,
   CInputGroupText,
+  CInvalidFeedback,
   CLabel,
   CSelect,
   CSpinner,
@@ -21,6 +21,7 @@ class Form extends Component {
     data: {},
     errors: {},
     btnDisable: false,
+    spinner: false,
   };
 
   handleSubmit = (e) => {
@@ -78,16 +79,7 @@ class Form extends Component {
       : null;
   };
 
-  renderInput = (
-    name,
-    label,
-    type,
-    others = {},
-    hidden = false,
-    helpBlock = "",
-    valid = false,
-    invalid = false
-  ) => {
+  renderInput = (name, label, type, others = {}, hidden = false) => {
     const { data, errors } = this.state;
     return (
       <CFormGroup hidden={hidden}>
@@ -98,14 +90,10 @@ class Form extends Component {
           name={name}
           onChange={this.handleChange}
           value={data[name]}
-          valid={valid}
-          invalid={invalid}
+          invalid={errors[name] ? true : false}
           {...others}
         />
-        <CFormText className="help-block">{helpBlock}</CFormText>
-        <CFormText className="help-block" color="danger">
-          {errors[name]}
-        </CFormText>
+        <CInvalidFeedback>{errors[name]}</CInvalidFeedback>
       </CFormGroup>
     );
   };
@@ -116,9 +104,7 @@ class Form extends Component {
     placeholder,
     iconName,
     others = {},
-    hidden = false,
-    valid = false,
-    invalid = false
+    hidden = false
   ) => {
     const { data, errors } = this.state;
     return (
@@ -135,15 +121,12 @@ class Form extends Component {
             name={name}
             onChange={this.handleChange}
             value={data[name]}
-            valid={valid}
-            invalid={invalid}
+            invalid={errors[name] ? true : false}
             placeholder={placeholder}
             {...others}
           />
+          <CInvalidFeedback>{errors[name]}</CInvalidFeedback>
         </CInputGroup>
-        <CFormText className="help-block" color="danger">
-          {errors[name]}
-        </CFormText>
       </CFormGroup>
     );
   };
@@ -154,9 +137,7 @@ class Form extends Component {
     iconName,
     options,
     others = {},
-    hidden = false,
-    valid = false,
-    invalid = false
+    hidden = false
   ) => {
     const { data, errors } = this.state;
     return (
@@ -173,8 +154,7 @@ class Form extends Component {
             id={name}
             value={data[name]}
             onChange={this.handleChange}
-            valid={valid}
-            invalid={invalid}
+            invalid={errors[name] ? true : false}
             {...others}
           >
             <option value="" disabled hidden>
@@ -190,24 +170,13 @@ class Form extends Component {
                 })
               : ""}
           </CSelect>
+          <CInvalidFeedback>{errors[name]}</CInvalidFeedback>
         </CInputGroup>
-        <CFormText className="help-block" color="danger">
-          {errors[name]}
-        </CFormText>
       </CFormGroup>
     );
   };
 
-  renderSelect = (
-    name,
-    label,
-    options,
-    others = {},
-    hidden = false,
-    helpBlock = "",
-    valid = false,
-    invalid = false
-  ) => {
+  renderSelect = (name, label, options, others = {}, hidden = false) => {
     const { data, errors } = this.state;
     return (
       <CFormGroup hidden={hidden}>
@@ -218,8 +187,7 @@ class Form extends Component {
           id={name}
           value={data[name]}
           onChange={this.handleChange}
-          valid={valid}
-          invalid={invalid}
+          invalid={errors[name] ? true : false}
           {...others}
         >
           <option value="" disabled hidden>
@@ -235,24 +203,12 @@ class Form extends Component {
               })
             : ""}
         </CSelect>
-        <CFormText className="help-block">{helpBlock}</CFormText>
-        <CFormText className="help-block" color="danger">
-          {errors[name]}
-        </CFormText>
+        <CInvalidFeedback>{errors[name]}</CInvalidFeedback>
       </CFormGroup>
     );
   };
 
-  renderTextArea(
-    name,
-    label,
-    rows,
-    others = {},
-    hidden = false,
-    helpBlock = "",
-    valid = false,
-    invalid = false
-  ) {
+  renderTextArea(name, label, rows, others = {}, hidden = false) {
     const { data, errors } = this.state;
     return (
       <CFormGroup hidden={hidden}>
@@ -263,19 +219,15 @@ class Form extends Component {
           name={name}
           onChange={this.handleChange}
           value={data[name]}
-          valid={valid}
-          invalid={invalid}
+          invalid={errors[name] ? true : false}
           {...others}
         />
-        <CFormText className="help-block">{helpBlock}</CFormText>
-        <CFormText className="help-block" color="danger">
-          {errors[name]}
-        </CFormText>
+        <CInvalidFeedback>{errors[name]}</CInvalidFeedback>
       </CFormGroup>
     );
   }
 
-  renderButton = (label, btnColor, spinner, spinnerColor, others = {}) => {
+  renderButton = (label, btnColor, spinnerColor, others = {}) => {
     return (
       <CButton
         disabled={this.state.btnDisable && (this.validate() ? true : false)}
@@ -283,7 +235,8 @@ class Form extends Component {
         color={this.state.btnDisable ? "secondary" : btnColor}
         {...others}
       >
-        <CSpinner hidden={!spinner} color={spinnerColor} size="sm" /> {label}
+        <CSpinner hidden={!this.state.spinner} color={spinnerColor} size="sm" />{" "}
+        {label}
       </CButton>
     );
   };

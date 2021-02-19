@@ -71,15 +71,9 @@ class Login extends Form {
                       )}
                       <CRow>
                         <CCol xs="6">
-                          {this.renderButton(
-                            "Login",
-                            "primary",
-                            this.state.spinner,
-                            "danger",
-                            {
-                              className: "px-4",
-                            }
-                          )}
+                          {this.renderButton("Login", "primary", "danger", {
+                            className: "px-4",
+                          })}
                         </CCol>
                         <CCol xs="6" className="text-right">
                           <CButton color="link" className="px-0">
@@ -121,7 +115,8 @@ class Login extends Form {
 
   callServer = async () => {
     this.setState({ spinner: true });
-    const response = await api.auth.register(this.state.data);
+    const response = await api.auth.login(this.state.data);
+    this.setState({ spinner: false });
     if (response.resCode === 200) {
       localStorage.setItem(
         "scms-auth-token",
@@ -145,7 +140,6 @@ class Login extends Form {
         toast.error(response.result.error.single);
       }
     }
-    this.setState({ spinner: false });
   };
 }
 
