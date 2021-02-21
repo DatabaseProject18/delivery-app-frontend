@@ -1,4 +1,5 @@
 import axios from "axios";
+import querystring from "querystring";
 
 const instance = axios.create({
   baseURL: "http://localhost:3005/api/",
@@ -72,6 +73,19 @@ export const api = {
   customer: {
     getCustomerTypes: async () => {
       return await createResult(instance.get("customer/types"));
+    },
+    getCart: async (data) => {
+      return await createResult(
+        instance.get(`cart?${querystring.stringify(data)}`)
+      );
+    },
+    setCartQuntity: async (data) => {
+      return await createResult(instance.patch("cart/cartQuantity", data));
+    },
+    productDeleteFromCart: async (data) => {
+      return await createResult(
+        instance.patch("cart/productDeleteFromCart", data)
+      );
     },
   },
 };
