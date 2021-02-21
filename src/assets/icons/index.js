@@ -10,6 +10,7 @@ import {
   cilSpeech,
   cilSpeedometer,
   cilUser,
+  cilCart,
 } from "@coreui/icons";
 
 export const icons = Object.assign(
@@ -26,6 +27,7 @@ export const icons = Object.assign(
     cilSettings,
     cilCreditCard,
     cilMobile,
+    cilCart,
   },
   {},
   {}
