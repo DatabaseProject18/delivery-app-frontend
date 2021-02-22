@@ -82,17 +82,60 @@ export const api = {
     getCustomerTypes: async () => {
       return await createResult(getInstance().get("customer/types"));
     },
+  },
+  cart: {
     getCart: async (data) => {
       return await createResult(
-        instance.get(`cart?${querystring.stringify(data)}`)
+        getInstance().get(`cart?${querystring.stringify(data)}`)
       );
     },
     setCartQuntity: async (data) => {
-      return await createResult(instance.patch("cart/cartQuantity", data));
+      return await createResult(getInstance().patch("cart/cartQuantity", data));
     },
     productDeleteFromCart: async (data) => {
       return await createResult(
-        instance.patch("cart/productDeleteFromCart", data)
+        getInstance().patch("cart/productDeleteFromCart", data)
+      );
+    },
+  },
+  order: {
+    getPastOrders: async (data) => {
+      return await createResult(
+        getInstance().get(`order/PastOrders?${querystring.stringify(data)}`)
+      );
+    },
+    getPastOrder: async (order_id) => {
+      return await createResult(
+        getInstance().get(`order/PastOrders/${order_id}`)
+      );
+    },
+    cancelOrder: async (order_id) => {
+      return await createResult(
+        getInstance().patch(`order/CancelOrder/${order_id}`)
+      );
+    },
+  },
+  truckTrip: {
+    getSheduledTruckTrips: async (data) => {
+      return await createResult(
+        getInstance().get(`truckTrip/myTrip?${querystring.stringify(data)}`)
+      );
+    },
+    getTruckTripDetails: async (truckTrip_id) => {
+      return await createResult(
+        getInstance().get(`truckTrip/truckTripDetails/${truckTrip_id}`)
+      );
+    },
+    getTruckTripOrderDetails: async (truckTrip_id) => {
+      return await createResult(
+        getInstance().get(`truckTrip/truckTripOrderDetails/${truckTrip_id}`)
+      );
+    },
+  },
+  truckRoute: {
+    getTruckRouteByID: async (truck_route_id) => {
+      return await createResult(
+        getInstance().get(`truckRoute/truckRouteByID/${truck_route_id}`)
       );
     },
   },

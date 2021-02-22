@@ -11,6 +11,7 @@ import {
 import { toast } from "react-toastify";
 import { api } from "../../services/api";
 import { isLogin } from "../../services/auth";
+import { numberWithCommas } from "../../utils/numberConvert";
 
 class Orders extends Component {
   state = {
@@ -34,7 +35,7 @@ class Orders extends Component {
   };
 
   async componentDidMount() {
-    const response = await api.customer.getPastOrders({
+    const response = await api.order.getPastOrders({
       customer_id: isLogin().customer_id,
     });
     if (response.resCode === 200) {
@@ -97,7 +98,3 @@ class Orders extends Component {
 }
 
 export default Orders;
-
-function numberWithCommas(x) {
-  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-}

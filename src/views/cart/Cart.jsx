@@ -16,6 +16,7 @@ import {
 import { toast } from "react-toastify";
 import { api } from "../../services/api";
 import { isLogin } from "../../services/auth";
+import { numberWithCommas } from "../../utils/numberConvert";
 
 class Cart extends Component {
   state = {
@@ -25,7 +26,7 @@ class Cart extends Component {
   };
 
   async componentDidMount() {
-    const response = await api.customer.getCart({
+    const response = await api.cart.getCart({
       customer_id: isLogin().customer_id,
     });
     console.log(response);
@@ -70,7 +71,7 @@ class Cart extends Component {
         quantity: temp[index].quantity,
         cart_id: temp[index].cart_id,
       };
-      const response = await api.customer.setCartQuntity(data);
+      const response = await api.cart.setCartQuntity(data);
       console.log(temp);
       console.log(backup);
       if (response.resCode !== 200) {
@@ -100,7 +101,7 @@ class Cart extends Component {
     }
     this.setState({ cart: temp });
     this.setState({ modalState: false });
-    const response = await api.customer.productDeleteFromCart(data);
+    const response = await api.cart.productDeleteFromCart(data);
     if (response.resCode !== 200) {
       this.setState({ cart: backup });
       if (response.result.error.single)
@@ -221,7 +222,3 @@ class Cart extends Component {
 }
 
 export default Cart;
-
-function numberWithCommas(x) {
-  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-}

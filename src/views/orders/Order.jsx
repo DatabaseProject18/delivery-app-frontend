@@ -12,7 +12,7 @@ import {
 import { toast } from "react-toastify";
 import { api } from "../../services/api";
 import { isLogin } from "../../services/auth";
-
+import { numberWithCommas } from "../../utils/numberConvert";
 class Order extends Component {
   state = {
     order_id: this.props.match.params.order_id,
@@ -21,7 +21,7 @@ class Order extends Component {
   };
 
   async componentDidMount() {
-    const response = await api.customer.getPastOrder(this.state.order_id);
+    const response = await api.order.getPastOrder(this.state.order_id);
     if (response.resCode === 200) {
       const data = response.result.data.multiple;
       console.log(data);
@@ -30,6 +30,9 @@ class Order extends Component {
       if (response.result.error.single)
         toast.error(response.result.error.single);
     }
+  }
+  componentWillUnmount() {
+    toast.dismiss();
   }
 
   getBadge = (status) => {
@@ -53,7 +56,7 @@ class Order extends Component {
       e.order_status = "Canceled";
     });
     this.setState({ pastOrderData: temp });
-    const response = await api.customer.cancelOrder(this.state.order_id);
+    const response = await api.order.cancelOrder(this.state.order_id);
     //console.log(response);
     if (response.resCode !== 200) {
       this.setState({ pastOrderData: backup });
@@ -144,7 +147,3 @@ class Order extends Component {
 }
 
 export default Order;
-
-function numberWithCommas(x) {
-  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-}
