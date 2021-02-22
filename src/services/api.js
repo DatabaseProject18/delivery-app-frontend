@@ -114,6 +114,11 @@ export const api = {
         getInstance().patch(`order/CancelOrder/${order_id}`)
       );
     },
+    confirmOrder: async (order_id) => {
+      return await createResult(
+        getInstance().patch(`order/ConfirmOrder/${order_id}`)
+      );
+    },
   },
   truckTrip: {
     getSheduledTruckTrips: async (data) => {
@@ -135,7 +140,7 @@ export const api = {
   truckRoute: {
     getTruckRouteByID: async (truck_route_id) => {
       return await createResult(
-        getInstance().get(`truckRoute/truckRouteByID/${truck_route_id}`)
+        getInstance().get(`truck/truckRouteByID/${truck_route_id}`)
       );
     },
   },
