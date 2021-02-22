@@ -20,7 +20,6 @@ import { isLogin } from "../../services/auth";
 class Cart extends Component {
   state = {
     cart: [],
-    stateChnage: true,
     modalState: false,
     deleteItemIndex: null,
   };
@@ -110,7 +109,7 @@ class Cart extends Component {
   };
 
   render() {
-    const { cart, stateChnage, modalState, deleteItemIndex } = this.state;
+    const { cart, modalState } = this.state;
     return (
       <Fragment>
         <CRow>

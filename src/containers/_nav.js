@@ -14,6 +14,12 @@ const _nav = [
     to: "/cart",
     icon: <CIcon name="cil-cart" customClasses="c-sidebar-nav-icon" />,
   },
+  {
+    _tag: "CSidebarNavItem",
+    name: "My Orders",
+    to: "/my-orders",
+    icon: <CIcon name="cil-balance-scale" customClasses="c-sidebar-nav-icon" />,
+  },
 ];
 
 export default _nav;
