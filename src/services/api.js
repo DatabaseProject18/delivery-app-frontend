@@ -2,9 +2,15 @@ import axios from "axios";
 
 const instance = axios.create({
   baseURL: "http://localhost:3005/api/",
-  timeout: 10000,
-  headers: { "scms-auth-token": localStorage.getItem("scms-auth-token") },
+  timeout: 40000,
 });
+
+const getInstance = () => {
+  instance.defaults.headers.common["scms-auth-token"] = localStorage.getItem(
+    "scms-auth-token"
+  );
+  return instance;
+};
 
 const createResult = async (promise) => {
   let result;
@@ -25,18 +31,20 @@ const createResult = async (promise) => {
       (result.error.single === "Authorization token is not provided" ||
         result.error.single === "Authorization token is invalid")
     ) {
-      const res = await instance.post("renewAccessToken", {
+      const res = await getInstance().post("renewAccessToken", {
         refreshToken: localStorage.getItem("scms-refresh-token"),
       });
       if (res.status === 200) {
         localStorage.setItem("scms-auth-token", res.data.single);
         if (error.response.config.method === "get") {
           return await createResult(
-            instance[error.response.config.method](error.response.config.url)
+            getInstance()[error.response.config.method](
+              error.response.config.url
+            )
           );
         } else {
           return await createResult(
-            instance[error.response.config.method](
+            getInstance()[error.response.config.method](
               error.response.config.url,
               JSON.parse(error.response.config.data)
             )
@@ -60,18 +68,18 @@ const createResult = async (promise) => {
 export const api = {
   auth: {
     register: async (data) => {
-      return await createResult(instance.post("register", data));
+      return await createResult(getInstance().post("register", data));
     },
     login: async (data) => {
-      return await createResult(instance.post("login", data));
+      return await createResult(getInstance().post("login", data));
     },
     logout: async (data) => {
-      return await createResult(instance.post("logout", data));
+      return await createResult(getInstance().post("logout", data));
     },
   },
   customer: {
     getCustomerTypes: async () => {
-      return await createResult(instance.get("customer/types"));
+      return await createResult(getInstance().get("customer/types"));
     },
   },
 };
