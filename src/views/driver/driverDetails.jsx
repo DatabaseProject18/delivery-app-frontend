@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 
-class details extends Component {
+class DriverDetails extends Component {
   render() {
     return <div>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</div>;
   }
 }
 
-export default details;
+export default DriverDetails;
