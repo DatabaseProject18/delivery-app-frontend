@@ -17,7 +17,7 @@ const routes = [
   { path: "/my-orders", name: "MyOrders", component: MyOrders },
   { path: "/my-trips/:trip_id", name: "Details", component: TripsDetails },
   { path: "/my-trips", name: "MyTrips", component: MyTrips },
-  { path: "/drivers", name: "DriverDetails", Component: DriverDetails},
+  
 ];
 
 export default routes;
