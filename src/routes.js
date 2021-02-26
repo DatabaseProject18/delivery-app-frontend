@@ -6,10 +6,9 @@ const MyOrders = React.lazy(() => import("./views/orders/Orders"));
 const MyOrder = React.lazy(() => import("./views/orders/Order"));
 const MyTrips = React.lazy(() => import("./views/myTrips/MyTrips"));
 const TripsDetails = React.lazy(() => import("./views/myTrips/TripDetails"));
-const DriverDetails = React.lazy(() => import("./views/driver/driverDetails"));
+const Details = React.lazy(() => import("./views/driver/driverDetails"));
 
 const routes = [
-  
   { path: "/", exact: true, name: "Home" },
   { path: "/dashboard", name: "Dashboard", component: Dashboard },
   { path: "/cart", name: "Cart", component: Cart },
@@ -17,7 +16,7 @@ const routes = [
   { path: "/my-orders", name: "MyOrders", component: MyOrders },
   { path: "/my-trips/:trip_id", name: "Details", component: TripsDetails },
   { path: "/my-trips", name: "MyTrips", component: MyTrips },
-  { path: "/drivers", name: "DriverDetails", Component: DriverDetails},
+  { path: "/drivers", name: "Details", component: Details },
 ];
 
 export default routes;
