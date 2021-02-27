@@ -144,4 +144,16 @@ export const api = {
       );
     },
   },
+  driver: {
+    driverDetails: async () => {
+      return await createResult(
+        getInstance().get("driver/driverDetails")
+      );
+    },
+    driverFullDetails: async (driver_id) => {
+      return await createResult(
+        getInstance().get(`driver/driverDetails/${driver_id}`)
+      );
+    },
+  },
 };

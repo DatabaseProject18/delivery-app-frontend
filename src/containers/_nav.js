@@ -29,6 +29,13 @@ const _nav = [
     icon: <CIcon name="cil-truck" customClasses="c-sidebar-nav-icon" />,
     userType: ["driver", "driver_assistant"],
   },
+  {
+    _tag: "CSidebarNavItem",
+    name: "Check Drivers",
+    to: "/drivers",
+    icon: <CIcon name="cil-user" customClasses="c-sidebar-nav-icon" />,
+    userType: "store_manager",
+  },
 ];
 
 export default _nav;
