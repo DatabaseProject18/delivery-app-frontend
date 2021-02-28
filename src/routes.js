@@ -13,7 +13,7 @@ const SheduledTruckTrips = React.lazy(() =>
   import("./views/truckTrip/SheduledTruckTrips")
 );
 const CreateTruckTrip = React.lazy(() =>
-  import("./views/truckTrip/CreateTruckTrip")
+  import("./views/truckTrip/CreateTruckTrip"));
 
 const DriverAssistantDetails = React.lazy(() => import("./views/driverAssistant/driverAssistantDetails"));
 const SingleDriverAssistant = React.lazy(() => import("./views/driverAssistant/singleDriverAssistant"));
