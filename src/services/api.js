@@ -145,9 +145,11 @@ export const api = {
     },
   },
   driver: {
-    driverDetails: async () => {
+    driverDetails: async (store_manager_id) => {
       return await createResult(
-        getInstance().get("driver/driverDetails")
+        getInstance().get(
+          `driver/driverDetails?store_manager_id=${store_manager_id}`
+        )
       );
     },
     driverFullDetails: async (driver_id) => {
