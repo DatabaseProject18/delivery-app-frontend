@@ -14,19 +14,19 @@ import { api } from "../../services/api";
 import { isLogin } from "../../services/auth";
 import { numberWithCommas } from "../../utils/numberConvert";
 
-class SingleDriver extends Component {
+class SingleDriverAssistant extends Component {
   state = {
     fields: ["first_name", "last_name", "email","staff_id","store_id","total_work_hours"],
-    driver_id: this.props.match.params.driver_id,
-    driverData: [],
+    driver_assistant_id: this.props.match.params.driver_assistant_id,
+    driverAssistantData: [],
   };
 
   async componentDidMount() {
-    const response = await api.driver.driverFullDetails(this.state.driver_id);
+    const response = await api.driverAssistant.driverAssistantFullDetails(this.state.driver_assistant_id);
     if (response.resCode === 200) {
       const data = response.result.data.multiple;
       console.log(data);
-      this.setState({ driverData: data });
+      this.setState({ driverAssistantData: data });
     } else {
       if (response.result.error.single)
         toast.error(response.result.error.single);
@@ -37,16 +37,16 @@ class SingleDriver extends Component {
   }
 
   render() {
-    const { driver_id, driverData, fields } = this.state;
+    const { driver_assistant_id, driverAssistantData, fields } = this.state;
 
     return (
         <CRow>
           <CCol>
             <CCard>
-              <CCardHeader>Driver</CCardHeader>
+              <CCardHeader>Driver Assistant</CCardHeader>
               <CCardBody>
                 <CDataTable
-                  items={driverData}
+                  items={driverAssistantData}
                   fields={fields}
                   hover
                   striped
@@ -66,5 +66,5 @@ class SingleDriver extends Component {
   }
 }
 
-export default SingleDriver;
+export default SingleDriverAssistant;
 

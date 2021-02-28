@@ -168,4 +168,32 @@ export const api = {
       );
     },
   },
+  driverAssistant: {
+    driverAssistantDetails: async (store_manager_id) => {
+      return await createResult(
+        getInstance().get(
+          `driverAssistant/driverAssistantDetails?store_manager_id=${store_manager_id}`
+        )
+      );
+    },
+    driverAssistantFullDetails: async (driver_assistant_id) => {
+      return await createResult(
+        getInstance().get(`driverAssistant/driverAssistantDetails/${driver_assistant_id}`)
+      );
+    },
+  },
+  user: {
+    userDetails: async () => {
+      return await createResult(
+        getInstance().get(
+          "user/userDetails"
+        )
+      );
+    },
+    userFullDetails: async (user_id) => {
+      return await createResult(
+        getInstance().get(`user/userDetails/${user_id}`)
+      );
+    },
+  }
 };
