@@ -149,10 +149,7 @@ class CreateTruckTrip extends Component {
                 <CFormGroup className="mb-3">
                   <CInputGroup>
                     <CInputGroupPrepend>
-                      <CInputGroupText>
-                        <CIcon name="cil-mobile" />
-                        Route
-                      </CInputGroupText>
+                      <CInputGroupText>Route</CInputGroupText>
                     </CInputGroupPrepend>
                     <CSelect
                       custom
