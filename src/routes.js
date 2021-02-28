@@ -8,6 +8,12 @@ const MyTrips = React.lazy(() => import("./views/myTrips/MyTrips"));
 const TripsDetails = React.lazy(() => import("./views/myTrips/TripDetails"));
 const DriverDetails = React.lazy(() => import("./views/driver/driverDetails"));
 const SingleDriver = React.lazy(() => import("./views/driver/singleDriver"));
+const SheduledTruckTrips = React.lazy(() =>
+  import("./views/truckTrip/SheduledTruckTrips")
+);
+const CreateTruckTrip = React.lazy(() =>
+  import("./views/truckTrip/CreateTruckTrip")
+);
 
 const routes = [
   { path: "/", exact: true, name: "Home" },
@@ -23,6 +29,16 @@ const routes = [
     component: SingleDriver,
   },
   { path: "/drivers", name: "DriverDetails", component: DriverDetails },
+  {
+    path: "/sheduled-truck-trips",
+    name: "Truck Trips",
+    component: SheduledTruckTrips,
+  },
+  {
+    path: "/create-truck-trips",
+    name: "Create TruckTrip",
+    component: CreateTruckTrip,
+  },
 ];
 
 export default routes;
