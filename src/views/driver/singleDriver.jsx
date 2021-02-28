@@ -52,81 +52,82 @@ class SingleDriver extends Component {
     const { driver_id, driverData } = this.state;
 
     return (
-      <CRow>
-        <CCol>
-          <CCard>
-            <CCardHeader>
-              <h4>{`Driver ID : ${driver_id}`}</h4>
-            </CCardHeader>
-            {driverData.length > 0 && (
-              <CRow>
-                <CCol style={{ marginLeft: "2rem" }}>
-                  <br />
-                  <div>
-                    {`Order Date : ${
-                      pastOrderData[0].order_date.split("T")[0]
-                    }`}
-                  </div>
-                  <div>
-                    {`Delivery Date : ${
-                      pastOrderData[0].delivery_date.split("T")[0]
-                    }`}
-                  </div>
-                  <div>
-                    {`Total Cost (Rs) : ${numberWithCommas(
-                      pastOrderData[0].cost
-                    )}`}
-                  </div>
-                  <div>
-                    Order Status :
-                    {
-                      <CBadge
-                        style={{ marginLeft: "0.5rem" }}
-                        color={this.getBadge(pastOrderData[0].order_status)}
-                      >
-                        {pastOrderData[0].order_status}
-                      </CBadge>
-                    }
-                  </div>
-                  {pastOrderData[0].order_status == "Preparing" && (
-                    <CButton
-                      disabled={cancelBtn}
-                      onClick={this.handleCancel}
-                      style={{ marginTop: "0.5rem" }}
-                      color="danger"
-                    >
-                      Cancel
-                    </CButton>
-                  )}
-                </CCol>
-              </CRow>
-            )}
-            <CCardBody>
-              {pastOrderData.map((e) => (
-                <CCard
-                  key={Math.floor(Math.random() * 100000)}
-                  accentColor="info"
-                >
-                  <CCardHeader>
-                    <h5>
-                      {`${pastOrderData.indexOf(e) + 1}. ${e.product_name}`}{" "}
-                    </h5>
-                  </CCardHeader>
-                  <CCardBody>
-                    <div>Quantity : x{e.quantity}</div>
-                    <div>{`Cost (Rs): ${numberWithCommas(
-                      e.item_price
-                    )} x ${numberWithCommas(e.quantity)} = ${numberWithCommas(
-                      e.item_price * e.quantity
-                    )}`}</div>
-                    <div>Description : {e.product_description}</div>
-                  </CCardBody>
-                </CCard>
-              ))}
-            </CCardBody>
-          </CCard>
-        </CCol>
-      </CRow>
+      <div>Have some errors</div>
+      // <CRow>
+      //   <CCol>
+      //     <CCard>
+      //       <CCardHeader>
+      //         <h4>{`Driver ID : ${driver_id}`}</h4>
+      //       </CCardHeader>
+      //       {driverData.length > 0 && (
+      //         <CRow>
+      //           <CCol style={{ marginLeft: "2rem" }}>
+      //             <br />
+      //             <div>
+      //               {`Order Date : ${
+      //                 pastOrderData[0].order_date.split("T")[0]
+      //               }`}
+      //             </div>
+      //             <div>
+      //               {`Delivery Date : ${
+      //                 pastOrderData[0].delivery_date.split("T")[0]
+      //               }`}
+      //             </div>
+      //             <div>
+      //               {`Total Cost (Rs) : ${numberWithCommas(
+      //                 pastOrderData[0].cost
+      //               )}`}
+      //             </div>
+      //             <div>
+      //               Order Status :
+      //               {
+      //                 <CBadge
+      //                   style={{ marginLeft: "0.5rem" }}
+      //                   color={this.getBadge(pastOrderData[0].order_status)}
+      //                 >
+      //                   {pastOrderData[0].order_status}
+      //                 </CBadge>
+      //               }
+      //             </div>
+      //             {pastOrderData[0].order_status == "Preparing" && (
+      //               <CButton
+      //                 disabled={cancelBtn}
+      //                 onClick={this.handleCancel}
+      //                 style={{ marginTop: "0.5rem" }}
+      //                 color="danger"
+      //               >
+      //                 Cancel
+      //               </CButton>
+      //             )}
+      //           </CCol>
+      //         </CRow>
+      //       )}
+      //       <CCardBody>
+      //         {pastOrderData.map((e) => (
+      //           <CCard
+      //             key={Math.floor(Math.random() * 100000)}
+      //             accentColor="info"
+      //           >
+      //             <CCardHeader>
+      //               <h5>
+      //                 {`${pastOrderData.indexOf(e) + 1}. ${e.product_name}`}{" "}
+      //               </h5>
+      //             </CCardHeader>
+      //             <CCardBody>
+      //               <div>Quantity : x{e.quantity}</div>
+      //               <div>{`Cost (Rs): ${numberWithCommas(
+      //                 e.item_price
+      //               )} x ${numberWithCommas(e.quantity)} = ${numberWithCommas(
+      //                 e.item_price * e.quantity
+      //               )}`}</div>
+      //               <div>Description : {e.product_description}</div>
+      //             </CCardBody>
+      //           </CCard>
+      //         ))}
+      //       </CCardBody>
+      //     </CCard>
+      //   </CCol>
+      // </CRow>
     );
   }
 }

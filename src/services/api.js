@@ -146,13 +146,90 @@ export const api = {
   },
   driver: {
     driverDetails: async () => {
-      return await createResult(
-        getInstance().get("driver/driverDetails")
-      );
+      return await createResult(getInstance().get("driver/driverDetails"));
     },
     driverFullDetails: async (driver_id) => {
       return await createResult(
         getInstance().get(`driver/driverDetails/${driver_id}`)
+      );
+    },
+  },
+  report: {
+    getYearlyIncome: async () => {
+      return await createResult(getInstance().get("report/years-income"));
+    },
+    getQuarterlyIncome: async (year) => {
+      return await createResult(
+        getInstance().get(`report/year-quarterly-income?year=${year}`)
+      );
+    },
+    getBasicOrderDetailsOfQuarter: async (year, quarter) => {
+      return await createResult(
+        getInstance().get(
+          `report/year-quarter-orders-basic?year=${year}&quarter=${quarter}`
+        )
+      );
+    },
+    getOrderCountOfProducts: async (year) => {
+      if (year) {
+        return await createResult(
+          getInstance().get(`report/product-ordered-count?year=${year}`)
+        );
+      }
+      return await createResult(
+        getInstance().get(`report/product-ordered-count`)
+      );
+    },
+    getYears: async () => {
+      return await createResult(getInstance().get("report/all-years"));
+    },
+    getCityRouteIncome: async (year) => {
+      if (year) {
+        return await createResult(
+          getInstance().get(`report/city-route-income?year=${year}`)
+        );
+      }
+      return await createResult(getInstance().get(`report/city-route-income`));
+    },
+    getDriverWorkingHours: async (year, month) => {
+      return await createResult(
+        getInstance().get(
+          `report/working-hours/drivers${year || month ? `?` : ``}${
+            year ? `year=${year}` : ``
+          }${year && month ? `&` : ``}${month ? `month=${month}` : ``}`
+        )
+      );
+    },
+    getDriverAssistantWorkingHours: async (year, month) => {
+      return await createResult(
+        getInstance().get(
+          `report/working-hours/driver-assistants${year || month ? `?` : ``}${
+            year ? `year=${year}` : ``
+          }${year && month ? `&` : ``}${month ? `month=${month}` : ``}`
+        )
+      );
+    },
+    getTruckUsedHours: async (year, month) => {
+      return await createResult(
+        getInstance().get(
+          `report/used-hours/trucks${year || month ? `?` : ``}${
+            year ? `year=${year}` : ``
+          }${year && month ? `&` : ``}${month ? `month=${month}` : ``}`
+        )
+      );
+    },
+    getCustomerOrders: async (year) => {
+      return await createResult(
+        getInstance().get(
+          `report/customer-order${year ? `?year=${year}` : ``}`
+        )
+      );
+    },
+    getCustomerOrderBasicDetails: async (customerId) => {
+      return await createResult(
+        getInstance().get(
+          `report/customer-order-basic-details?customerId=${customerId}`
+        )
       );
     },
   },
