@@ -31,10 +31,24 @@ const _nav = [
   },
   {
     _tag: "CSidebarNavItem",
-    name: "Check Drivers",
+    name: "Drivers",
     to: "/drivers",
-    icon: <CIcon name="cil-user" customClasses="c-sidebar-nav-icon" />,
+    icon: <CIcon name="cil-people" customClasses="c-sidebar-nav-icon" />,
     userType: "store_manager",
+  },
+  {
+    _tag: "CSidebarNavItem",
+    name: "Driver Assistants",
+    to: "/driverAssistants",
+    icon: <CIcon name="cil-group" customClasses="c-sidebar-nav-icon" />,
+    userType: "store_manager",
+  },
+  {
+    _tag: "CSidebarNavItem",
+    name: "Users",
+    to: "/users",
+    icon: <CIcon name="cil-group" customClasses="c-sidebar-nav-icon" />,
+    userType: "company_manager",
   },
 ];
 
