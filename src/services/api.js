@@ -28,15 +28,16 @@ const createResult = async (promise) => {
     }
     result = error.response;
     if (
-      result.error &&
-      (result.error.single === "Authorization token is not provided" ||
-        result.error.single === "Authorization token is invalid")
+      result.data.error &&
+      (result.data.error.single === "Authorization token is not provided" ||
+        result.data.error.single === "Authorization token is invalid")
     ) {
       const res = await getInstance().post("renewAccessToken", {
         refreshToken: localStorage.getItem("scms-refresh-token"),
       });
+      console.log(res);
       if (res.status === 200) {
-        localStorage.setItem("scms-auth-token", res.data.single);
+        localStorage.setItem("scms-auth-token", res.data.data.single);
         if (error.response.config.method === "get") {
           return await createResult(
             getInstance()[error.response.config.method](
@@ -108,6 +109,9 @@ export const api = {
       return await createResult(
         getInstance().get(`order/PastOrders/${order_id}`)
       );
+    },
+    getOrdersByStatus: async () => {
+      return await createResult(getInstance().get(`order/order-count-by-status`));
     },
     cancelOrder: async (order_id) => {
       return await createResult(
@@ -234,9 +238,7 @@ export const api = {
     },
     getCustomerOrders: async (year) => {
       return await createResult(
-        getInstance().get(
-          `report/customer-order${year ? `?year=${year}` : ``}`
-        )
+        getInstance().get(`report/customer-order${year ? `?year=${year}` : ``}`)
       );
     },
     getCustomerOrderBasicDetails: async (customerId) => {
@@ -257,22 +259,20 @@ export const api = {
     },
     driverAssistantFullDetails: async (driver_assistant_id) => {
       return await createResult(
-        getInstance().get(`driverAssistant/driverAssistantDetails/${driver_assistant_id}`)
+        getInstance().get(
+          `driverAssistant/driverAssistantDetails/${driver_assistant_id}`
+        )
       );
     },
   },
   user: {
     userDetails: async () => {
-      return await createResult(
-        getInstance().get(
-          "user/userDetails"
-        )
-      );
+      return await createResult(getInstance().get("user/userDetails"));
     },
     userFullDetails: async (user_id) => {
       return await createResult(
         getInstance().get(`user/userDetails/${user_id}`)
       );
     },
-  }
+  },
 };
