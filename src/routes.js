@@ -19,6 +19,22 @@ const TruckUsedHours = React.lazy(() => import("./views/reports/truckUsedHours")
 const CustomerOrders = React.lazy(() => import("./views/reports/customerOrder"));
 const CustomerOrderDetails = React.lazy(() => import("./views/reports/customerOrderDetails"));
 
+const SheduledTruckTrips = React.lazy(() =>
+  import("./views/truckTrip/SheduledTruckTrips")
+);
+const CreateTruckTrip = React.lazy(() =>
+  import("./views/truckTrip/CreateTruckTrip")
+);
+
+const DriverAssistantDetails = React.lazy(() =>
+  import("./views/driverAssistant/driverAssistantDetails")
+);
+const SingleDriverAssistant = React.lazy(() =>
+  import("./views/driverAssistant/singleDriverAssistant")
+);
+const Users = React.lazy(() => import("./views/user/users"));
+const User = React.lazy(() => import("./views/user/user"));
+
 const routes = [
   { path: "/", exact: true, name: "Home" },
   { path: "/dashboard", name: "Dashboard", component: Dashboard },
@@ -39,6 +55,41 @@ const routes = [
   { path: "/working-hours/trucks", name: "Trucks Working Hours", component: TruckUsedHours },
   { path: "/customer-order/:customerId", name: "Basic Details", component: CustomerOrderDetails },
   { path: "/customer-order", name: "Customer Orders", component: CustomerOrders },
+  {
+    path: "/drivers/:driver_id",
+    name: "Full Driver Details",
+    component: SingleDriver,
+  },
+
+  { path: "/drivers", name: "DriverDetails", component: DriverDetails },
+  {
+    path: "/sheduled-truck-trips",
+    name: "Truck Trips",
+    component: SheduledTruckTrips,
+  },
+  {
+    path: "/create-truck-trips",
+    name: "Create TruckTrip",
+    component: CreateTruckTrip,
+  },
+
+  { path: "/drivers", name: "Driver Details", component: DriverDetails },
+  {
+    path: "/driverAssistants/:driver_assistant_id",
+    name: "Full Driver Assistant Details",
+    component: SingleDriverAssistant,
+  },
+  {
+    path: "/driverAssistants",
+    name: "Driver Assistant Details",
+    component: DriverAssistantDetails,
+  },
+  {
+    path: "/users/:user_id",
+    name: "Full User Details",
+    component: User,
+  },
+  { path: "/users", name: "User Details", component: Users },
 ];
 
 export default routes;

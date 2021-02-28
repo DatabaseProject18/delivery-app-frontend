@@ -138,15 +138,29 @@ export const api = {
     },
   },
   truckRoute: {
+    getTrucks: async (data) => {
+      return await createResult(
+        getInstance().get(`truck/trucks?${querystring.stringify(data)}`)
+      );
+    },
     getTruckRouteByID: async (truck_route_id) => {
       return await createResult(
         getInstance().get(`truck/truckRouteByID/${truck_route_id}`)
       );
     },
+    getTruckRoutes: async (data) => {
+      return await createResult(
+        getInstance().get(`truck/truckRoutes?${querystring.stringify(data)}`)
+      );
+    },
   },
   driver: {
-    driverDetails: async () => {
-      return await createResult(getInstance().get("driver/driverDetails"));
+    driverDetails: async (store_manager_id) => {
+      return await createResult(
+        getInstance().get(
+          `driver/driverDetails?store_manager_id=${store_manager_id}`
+        )
+      );
     },
     driverFullDetails: async (driver_id) => {
       return await createResult(
@@ -233,4 +247,32 @@ export const api = {
       );
     },
   },
+  driverAssistant: {
+    driverAssistantDetails: async (store_manager_id) => {
+      return await createResult(
+        getInstance().get(
+          `driverAssistant/driverAssistantDetails?store_manager_id=${store_manager_id}`
+        )
+      );
+    },
+    driverAssistantFullDetails: async (driver_assistant_id) => {
+      return await createResult(
+        getInstance().get(`driverAssistant/driverAssistantDetails/${driver_assistant_id}`)
+      );
+    },
+  },
+  user: {
+    userDetails: async () => {
+      return await createResult(
+        getInstance().get(
+          "user/userDetails"
+        )
+      );
+    },
+    userFullDetails: async (user_id) => {
+      return await createResult(
+        getInstance().get(`user/userDetails/${user_id}`)
+      );
+    },
+  }
 };

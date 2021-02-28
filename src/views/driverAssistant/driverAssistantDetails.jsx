@@ -10,18 +10,18 @@ import {
 import { toast } from "react-toastify";
 import { api } from "../../services/api";
 import { isLogin } from "../../services/auth";
-class DriverDetails extends Component {
+class DriverAssistantDetails extends Component {
   state = {
-    fields: ["driver_id", "first_name", "last_name", "email"],
-    driverData: [],
+    fields: ["driver_assistant_id", "first_name", "last_name", "email"],
+    driverAssistantData: [],
   };
 
   async componentDidMount() {
-    const response = await api.driver.driverDetails(isLogin().store_manager_id);
+    const response = await api.driverAssistant.driverAssistantDetails(isLogin().store_manager_id);
     console.log(response);
     if (response.resCode === 200) {
       const data = response.result.data.multiple;
-      this.setState({ driverData: data });
+      this.setState({ driverAssistantData: data });
     } else {
       if (response.result.error.single)
         toast.error(response.result.error.single);
@@ -31,20 +31,20 @@ class DriverDetails extends Component {
     toast.dismiss();
   }
 
-  handleRowClick = (driver_id) => {
-    this.props.history.push(`/drivers/${driver_id}`);
+  handleRowClick = (driver_assistant_id) => {
+    this.props.history.push(`/driverAssistants/${driver_assistant_id}`);
   };
 
   render() {
-    const { driverData, fields } = this.state;
+    const { driverAssistantData, fields } = this.state;
     return (
       <CRow>
         <CCol>
           <CCard>
-            <CCardHeader>Drivers</CCardHeader>
+            <CCardHeader>Driver Assistants</CCardHeader>
             <CCardBody>
               <CDataTable
-                items={driverData}
+                items={driverAssistantData}
                 fields={fields}
                 hover
                 striped
@@ -53,7 +53,7 @@ class DriverDetails extends Component {
                 itemsPerPage={10}
                 pagination
                 sorter
-                onRowClick={(e) => this.handleRowClick(e.driver_id)}
+                onRowClick={(e) => this.handleRowClick(e.driver_assistant_id)}
                 clickableRows
               />
             </CCardBody>
@@ -64,4 +64,4 @@ class DriverDetails extends Component {
   }
 }
 
-export default DriverDetails;
+export default DriverAssistantDetails;
