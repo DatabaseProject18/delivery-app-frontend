@@ -143,6 +143,11 @@ export const api = {
         getInstance().get(`truck/truckRouteByID/${truck_route_id}`)
       );
     },
+    getTruckRoutes: async (data) => {
+      return await createResult(
+        getInstance().get(`truck/truckRoutes?${querystring.stringify(data)}`)
+      );
+    },
   },
   driver: {
     driverDetails: async (store_manager_id) => {
