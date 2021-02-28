@@ -15,6 +15,10 @@ import {
   cilCart,
   cilBalanceScale,
   cilTruck,
+  cilDollar,
+  cilGift,
+  cilMap,
+  cilAvTimer,
 } from "@coreui/icons";
 
 export const icons = Object.assign(
@@ -36,6 +40,10 @@ export const icons = Object.assign(
     cilCart,
     cilBalanceScale,
     cilTruck,
+    cilDollar,
+    cilGift,
+    cilMap,
+    cilAvTimer,
   },
   {},
   {}
