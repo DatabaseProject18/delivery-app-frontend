@@ -9,6 +9,7 @@ import {
 } from "@coreui/react";
 import { toast } from "react-toastify";
 import { api } from "../../services/api";
+import { isLogin } from "../../services/auth";
 class DriverDetails extends Component {
   state = {
     fields: ["driver_id", "first_name", "last_name", "email"],
@@ -16,8 +17,7 @@ class DriverDetails extends Component {
   };
 
   async componentDidMount() {
-    const response = await api.driver.driverDetails({
-    });
+    const response = await api.driver.driverDetails(isLogin().store_manager_id);
     console.log(response);
     if (response.resCode === 200) {
       const data = response.result.data.multiple;
@@ -65,4 +65,3 @@ class DriverDetails extends Component {
 }
 
 export default DriverDetails;
-
