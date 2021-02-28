@@ -8,12 +8,17 @@ const MyTrips = React.lazy(() => import("./views/myTrips/MyTrips"));
 const TripsDetails = React.lazy(() => import("./views/myTrips/TripDetails"));
 const DriverDetails = React.lazy(() => import("./views/driver/driverDetails"));
 const SingleDriver = React.lazy(() => import("./views/driver/singleDriver"));
+
 const SheduledTruckTrips = React.lazy(() =>
   import("./views/truckTrip/SheduledTruckTrips")
 );
 const CreateTruckTrip = React.lazy(() =>
   import("./views/truckTrip/CreateTruckTrip")
-);
+
+const DriverAssistantDetails = React.lazy(() => import("./views/driverAssistant/driverAssistantDetails"));
+const SingleDriverAssistant = React.lazy(() => import("./views/driverAssistant/singleDriverAssistant"));
+const Users = React.lazy(() => import("./views/user/users"));
+const User = React.lazy(() => import("./views/user/user"));
 
 const routes = [
   { path: "/", exact: true, name: "Home" },
@@ -25,9 +30,10 @@ const routes = [
   { path: "/my-trips", name: "MyTrips", component: MyTrips },
   {
     path: "/drivers/:driver_id",
-    name: "FullDriverDetails",
+    name: "Full Driver Details",
     component: SingleDriver,
   },
+
   { path: "/drivers", name: "DriverDetails", component: DriverDetails },
   {
     path: "/sheduled-truck-trips",
@@ -39,6 +45,21 @@ const routes = [
     name: "Create TruckTrip",
     component: CreateTruckTrip,
   },
+
+  { path: "/drivers", name: "Driver Details", component: DriverDetails },
+  {
+    path: "/driverAssistants/:driver_assistant_id",
+    name: "Full Driver Assistant Details",
+    component: SingleDriverAssistant,
+  },
+  { path: "/driverAssistants", name: "Driver Assistant Details", component: DriverAssistantDetails },
+  {
+    path: "/users/:user_id",
+    name: "Full User Details",
+    component: User,
+  },
+  { path: "/users", name: "User Details", component: Users },
+
 ];
 
 export default routes;
