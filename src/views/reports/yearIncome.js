@@ -34,7 +34,7 @@ const YearIncome = () => {
       <CRow hidden={loading}>
         {data.map((item, index) => (
           <CCol key={index} xs="12" sm="6" md="3">
-            <Link to={`/quarterly-income/${item.order_year}`}>
+            <Link to={`/my/quarterly-income/${item.order_year}`}>
               <CWidgetIcon
                 text={`Income of ${item.order_year}`}
                 header={`RS. ${item.income}`}

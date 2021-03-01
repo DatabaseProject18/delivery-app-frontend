@@ -86,7 +86,7 @@ const QuarterlyIncome = (props) => {
                           size="sm"
                           onClick={() => {
                             props.history.push(
-                              `/quarter-orders-basic/${props.match.params.year}/${item.quarter}`
+                              `/my/quarter-orders-basic/${props.match.params.year}/${item.quarter}`
                             );
                           }}
                         >
