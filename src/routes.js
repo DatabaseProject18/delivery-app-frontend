@@ -8,6 +8,10 @@ const MyTrips = React.lazy(() => import("./views/myTrips/MyTrips"));
 const TripsDetails = React.lazy(() => import("./views/myTrips/TripDetails"));
 const DriverDetails = React.lazy(() => import("./views/driver/driverDetails"));
 const SingleDriver = React.lazy(() => import("./views/driver/singleDriver"));
+
+const NewOrderDetails = React.lazy(() => import("./views/newOrders/newOrders"));
+const SingleOrderDetails = React.lazy(() => import("./views/newOrders/newOrderDetails"))
+
 const YearIncome = React.lazy(() => import("./views/reports/yearIncome"));
 const QuarterlyIncome = React.lazy(() => import("./views/reports/quarterlyIncome"));
 const BasicOrderDetailsOfQuarter = React.lazy(() => import("./views/reports/basicOrderDetailsOfQuarter"));
@@ -35,6 +39,7 @@ const SingleDriverAssistant = React.lazy(() =>
 const Users = React.lazy(() => import("./views/user/users"));
 const User = React.lazy(() => import("./views/user/user"));
 
+
 const routes = [
   { path: "/", exact: true, name: "Home" },
   { path: "/dashboard", name: "Dashboard", component: Dashboard },
@@ -45,6 +50,10 @@ const routes = [
   { path: "/my-trips", name: "MyTrips", component: MyTrips },
   { path: "/drivers/:driver_id", name: "FullDriverDetails", Component: SingleDriver},
   { path: "/drivers", name: "DriverDetails", component: DriverDetails },
+
+  { path: "/newOrders",name: "NewOrders",component: NewOrderDetails},
+  { path: "/newOrder/:order_id", name: "NewSingleOrder",component: SingleOrderDetails}
+
   { path: "/yearly-income", name: "Sales Income", component: YearIncome },
   { path: "/quarterly-income/:year", name: "Quarterly Income", component: QuarterlyIncome },
   { path: "/quarter-orders-basic/:year/:quarter", name: "Basic Order Details", component: BasicOrderDetailsOfQuarter },
@@ -90,6 +99,7 @@ const routes = [
     component: User,
   },
   { path: "/users", name: "User Details", component: Users },
+
 ];
 
 export default routes;
