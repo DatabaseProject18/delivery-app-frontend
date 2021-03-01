@@ -213,6 +213,7 @@ class CreateTruckTrip extends Component {
   };
 
   handleSelectRoute = (currentTarget) => {
+    this.setState({ avalableOrdersForRoute: [] });
     this.setState({ selectedRouteID: currentTarget.target.value });
   };
 
@@ -360,26 +361,30 @@ class CreateTruckTrip extends Component {
   };
 
   isOrderSelectButtonHide(order_id) {
-    const isOrderSelected = this.state.avalableOrdersForRoute.find(
+    let isOrderSelected = this.state.avalableOrdersForRoute.find(
       (e) => e.order_id === order_id
-    ).isSelected;
+    );
     if (isOrderSelected) {
-      return false;
-    } else if (this.state.selectedTruckID > 0) {
-      const truckCapacity = this.state.trucks.find(
-        (e) => e.truck_id == this.state.selectedTruckID
-      ).truck_capacity;
-      let capacityOfSelectedOrders = 0;
-      this.state.avalableOrdersForRoute.map((e) => {
-        if (e.isSelected) capacityOfSelectedOrders += e.total_volume;
-      });
-      capacityOfSelectedOrders += this.state.avalableOrdersForRoute.find(
-        (e) => e.order_id == order_id
-      ).total_volume;
-      const precentage = capacityOfSelectedOrders / 10000 / truckCapacity;
+      isOrderSelected = isOrderSelected.isSelected;
 
-      if (precentage > 100) return true;
-      else return false;
+      if (isOrderSelected) {
+        return false;
+      } else if (this.state.selectedTruckID > 0) {
+        const truckCapacity = this.state.trucks.find(
+          (e) => e.truck_id == this.state.selectedTruckID
+        ).truck_capacity;
+        let capacityOfSelectedOrders = 0;
+        this.state.avalableOrdersForRoute.map((e) => {
+          if (e.isSelected) capacityOfSelectedOrders += e.total_volume;
+        });
+        capacityOfSelectedOrders += this.state.avalableOrdersForRoute.find(
+          (e) => e.order_id == order_id
+        ).total_volume;
+        const precentage = capacityOfSelectedOrders / 10000 / truckCapacity;
+
+        if (precentage > 100) return true;
+        else return false;
+      }
     }
 
     return true;
