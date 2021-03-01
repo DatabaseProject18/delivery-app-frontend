@@ -22,6 +22,7 @@ import {
   cilArrowThickFromLeft,
   cilSync,
   cilTrash,
+  cilSearch,
 } from "@coreui/icons";
 
 export const icons = Object.assign(
@@ -50,6 +51,7 @@ export const icons = Object.assign(
     cilArrowThickFromLeft,
     cilSync,
     cilTrash,
+    cilSearch,
   },
   {},
   {}
