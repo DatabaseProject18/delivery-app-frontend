@@ -18,7 +18,7 @@ const TheHeaderDropdown = () => {
     console.log(response);
     localStorage.removeItem("scms-auth-token");
     localStorage.removeItem("scms-refresh-token");
-    window.location = "/login";
+    window.location = "/";
   };
 
   return (

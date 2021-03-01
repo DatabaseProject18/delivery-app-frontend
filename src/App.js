@@ -47,12 +47,11 @@ class App extends Component {
             <Route
               exact
               path="/"
-              name="Home Page"
+              name="Landing Page"
               render={(props) => <Landing {...props} />}
             />
-            <ProtectedRoute
-              isLoggedIn
-              path="/dashboard"
+          <ProtectedRoute
+              path="/my"
               name="Home"
               render={(props) => <TheLayout {...props} />}
             />

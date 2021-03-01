@@ -29,7 +29,7 @@ class Login extends Form {
 
   componentDidMount() {
     if (isLogin()) {
-      this.props.history.push("/dashboard");
+      this.props.history.push("/my/dashboard");
     }
   }
 
@@ -130,7 +130,7 @@ class Login extends Form {
       if (state) {
         this.props.history.push(state.from);
       } else {
-        this.props.history.push("/dashboard");
+        this.props.history.push("/my/dashboard");
       }
     } else {
       if (response.result.error.multiple) {
