@@ -10,33 +10,15 @@ import {
 import { toast } from "react-toastify";
 import { api } from "../../services/api";
 import { isLogin } from "../../services/auth";
-class DriverDetails extends Component {
+
+class SheduledTruckTrips extends Component {
   state = {
+    truckTrips: [],
     fields: ["driver_id", "first_name", "last_name", "email"],
-    driverData: [],
-  };
-
-  async componentDidMount() {
-    const response = await api.driver.driverDetails(isLogin().store_manager_id);
-    console.log(response);
-    if (response.resCode === 200) {
-      const data = response.result.data.multiple;
-      this.setState({ driverData: data });
-    } else {
-      if (response.result.error.single)
-        toast.error(response.result.error.single);
-    }
-  }
-  componentWillUnmount() {
-    toast.dismiss();
-  }
-
-  handleRowClick = (driver_id) => {
-    this.props.history.push(`/drivers/${driver_id}`);
   };
 
   render() {
-    const { driverData, fields } = this.state;
+    const { truckTrips, fields } = this.state;
     return (
       <CRow>
         <CCol>
@@ -44,7 +26,7 @@ class DriverDetails extends Component {
             <CCardHeader>Drivers</CCardHeader>
             <CCardBody>
               <CDataTable
-                items={driverData}
+                items={truckTrips}
                 fields={fields}
                 hover
                 striped
@@ -53,7 +35,7 @@ class DriverDetails extends Component {
                 itemsPerPage={10}
                 pagination
                 sorter
-                onRowClick={(e) => this.handleRowClick(e.driver_id)}
+                //onRowClick={(e) => this.truckTrips(e.driver_id)}
                 clickableRows
               />
             </CCardBody>
@@ -64,4 +46,4 @@ class DriverDetails extends Component {
   }
 }
 
-export default DriverDetails;
+export default SheduledTruckTrips;
