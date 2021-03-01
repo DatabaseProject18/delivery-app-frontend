@@ -8,6 +8,10 @@ const MyTrips = React.lazy(() => import("./views/myTrips/MyTrips"));
 const TripsDetails = React.lazy(() => import("./views/myTrips/TripDetails"));
 const DriverDetails = React.lazy(() => import("./views/driver/driverDetails"));
 const SingleDriver = React.lazy(() => import("./views/driver/singleDriver"));
+
+const NewOrderDetails = React.lazy(() => import("./views/newOrders/newOrders"));
+const SingleOrderDetails = React.lazy(() => import("./views/newOrders/newOrderDetails"));
+
 const YearIncome = React.lazy(() => import("./views/reports/yearIncome"));
 const QuarterlyIncome = React.lazy(() => import("./views/reports/quarterlyIncome"));
 const BasicOrderDetailsOfQuarter = React.lazy(() => import("./views/reports/basicOrderDetailsOfQuarter"));
@@ -35,6 +39,7 @@ const SingleDriverAssistant = React.lazy(() =>
 const Users = React.lazy(() => import("./views/user/users"));
 const User = React.lazy(() => import("./views/user/user"));
 
+
 const routes = [
   { path: "/my", exact: true, name: "Home" },
   { path: "/my/dashboard", name: "Dashboard", component: Dashboard },
@@ -55,6 +60,18 @@ const routes = [
   { path: "/my/working-hours/trucks", name: "Trucks Working Hours", component: TruckUsedHours },
   { path: "/my/customer-order/:customerId", name: "Basic Details", component: CustomerOrderDetails },
   { path: "/my/customer-order", name: "Customer Orders", component: CustomerOrders },
+  { path: "/my/newOrders",name: "NewOrders",component: NewOrderDetails},
+  { path: "/my/newOrder/:order_id", name: "NewSingleOrder",component: SingleOrderDetails},
+  { path: "/yearly-income", name: "Sales Income", component: YearIncome },
+  { path: "/quarterly-income/:year", name: "Quarterly Income", component: QuarterlyIncome },
+  { path: "/quarter-orders-basic/:year/:quarter", name: "Basic Order Details", component: BasicOrderDetailsOfQuarter },
+  { path: "/most-ordered-product", name: "Sales Of Products", component: MostOrderedProduct },
+  { path: "/sales-income-city", name: "Sales Income of Each City", component: CityRouteIncome },
+  { path: "/working-hours/drivers", name: "Drivers Working Hours", component: DriverWorkingHours },
+  { path: "/working-hours/driver-assistants", name: "Drivers Assistants Working Hours", component: DriverAssistantWorkingHours },
+  { path: "/working-hours/trucks", name: "Trucks Working Hours", component: TruckUsedHours },
+  { path: "/customer-order/:customerId", name: "Basic Details", component: CustomerOrderDetails },
+  { path: "/customer-order", name: "Customer Orders", component: CustomerOrders },
   {
     path: "/my/drivers/:driver_id",
     name: "Full Driver Details",
@@ -90,6 +107,7 @@ const routes = [
     component: User,
   },
   { path: "/my/users", name: "User Details", component: Users },
+
 ];
 
 export default routes;
