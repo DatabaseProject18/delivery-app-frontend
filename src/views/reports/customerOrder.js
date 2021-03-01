@@ -138,7 +138,7 @@ const QuarterlyIncome = (props) => {
                           size="sm"
                           onClick={() => {
                             props.history.push(
-                              `/customer-order/${item.customer_id}`
+                              `/my/customer-order/${item.customer_id}`
                             );
                           }}
                         >
