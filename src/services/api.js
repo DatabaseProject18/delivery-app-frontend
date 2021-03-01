@@ -184,7 +184,7 @@ export const api = {
           getInstance().get(`deliveryManager/NewOrder/${order_id}`)
       );
     }
-
+  },
   report: {
     getYearlyIncome: async () => {
       return await createResult(getInstance().get("report/years-income"));
