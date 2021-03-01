@@ -172,6 +172,19 @@ export const api = {
       );
     },
   },
+
+  delivery_manager: {
+    newOrders: async () => {
+      return await createResult(
+          getInstance().get('deliveryManager/NewOrders')
+      );
+    },
+    getNewOrderDetails: async (order_id) => {
+      return await createResult(
+          getInstance().get(`deliveryManager/NewOrder/${order_id}`)
+      );
+    }
+
   report: {
     getYearlyIncome: async () => {
       return await createResult(getInstance().get("report/years-income"));
@@ -274,5 +287,6 @@ export const api = {
         getInstance().get(`user/userDetails/${user_id}`)
       );
     },
+
   },
 };
