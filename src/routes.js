@@ -10,7 +10,7 @@ const DriverDetails = React.lazy(() => import("./views/driver/driverDetails"));
 const SingleDriver = React.lazy(() => import("./views/driver/singleDriver"));
 
 const NewOrderDetails = React.lazy(() => import("./views/newOrders/newOrders"));
-const SingleOrderDetails = React.lazy(() => import("./views/newOrders/newOrderDetails"))
+const SingleOrderDetails = React.lazy(() => import("./views/newOrders/newOrderDetails"));
 
 const YearIncome = React.lazy(() => import("./views/reports/yearIncome"));
 const QuarterlyIncome = React.lazy(() => import("./views/reports/quarterlyIncome"));
@@ -52,7 +52,7 @@ const routes = [
   { path: "/drivers", name: "DriverDetails", component: DriverDetails },
 
   { path: "/newOrders",name: "NewOrders",component: NewOrderDetails},
-  { path: "/newOrder/:order_id", name: "NewSingleOrder",component: SingleOrderDetails}
+  { path: "/newOrder/:order_id", name: "NewSingleOrder",component: SingleOrderDetails},
 
   { path: "/yearly-income", name: "Sales Income", component: YearIncome },
   { path: "/quarterly-income/:year", name: "Quarterly Income", component: QuarterlyIncome },
