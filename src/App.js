@@ -17,6 +17,7 @@ const TheLayout = React.lazy(() => import("./containers/TheLayout"));
 // Pages
 const Login = React.lazy(() => import("./views/pages/login/Login"));
 const Register = React.lazy(() => import("./views/pages/register/Register"));
+const Search = React.lazy(() => import("./views/pages/landing/mainSearch"));
 
 class App extends Component {
   render() {
@@ -36,9 +37,15 @@ class App extends Component {
               name="Register Page"
               render={(props) => <Register {...props} />}
             />
+            <Route
+              exact
+              path="/"
+              name="Landing Page"
+              render={(props) => <Search {...props} />}
+            />
             <ProtectedRoute
               isLoggedIn
-              path="/"
+              path="/my"
               name="Home"
               render={(props) => <TheLayout {...props} />}
             />

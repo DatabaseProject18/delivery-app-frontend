@@ -37,7 +37,7 @@ class Register extends Form {
 
   async componentDidMount() {
     if (isLogin()) {
-      this.props.history.push("/dashboard");
+      this.props.history.push("/my/dashboard");
     }
     const response = await api.customer.getCustomerTypes();
     if (response.resCode === 200) {
@@ -215,7 +215,7 @@ class Register extends Form {
           "scms-refresh-token",
           response2.result.data.multiple.refreshToken
         );
-        this.props.history.push("/dashboard");
+        this.props.history.push("/my/dashboard");
       } else {
         this.props.history.push("/login");
       }

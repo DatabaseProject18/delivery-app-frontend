@@ -56,7 +56,7 @@ class Orders extends Component {
   }
 
   handleRowClick = (order_id) => {
-    this.props.history.push(`/my-orders/${order_id}`);
+    this.props.history.push(`/my/my-orders/${order_id}`);
   };
 
   render() {

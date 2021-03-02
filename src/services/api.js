@@ -28,15 +28,16 @@ const createResult = async (promise) => {
     }
     result = error.response;
     if (
-      result.error &&
-      (result.error.single === "Authorization token is not provided" ||
-        result.error.single === "Authorization token is invalid")
+      result.data.error &&
+      (result.data.error.single === "Authorization token is not provided" ||
+        result.data.error.single === "Authorization token is invalid")
     ) {
       const res = await getInstance().post("renewAccessToken", {
         refreshToken: localStorage.getItem("scms-refresh-token"),
       });
+      console.log(res);
       if (res.status === 200) {
-        localStorage.setItem("scms-auth-token", res.data.single);
+        localStorage.setItem("scms-auth-token", res.data.data.single);
         if (error.response.config.method === "get") {
           return await createResult(
             getInstance()[error.response.config.method](
@@ -109,6 +110,11 @@ export const api = {
         getInstance().get(`order/PastOrders/${order_id}`)
       );
     },
+    getOrdersByStatus: async () => {
+      return await createResult(
+        getInstance().get(`order/order-count-by-status`)
+      );
+    },
     cancelOrder: async (order_id) => {
       return await createResult(
         getInstance().patch(`order/CancelOrder/${order_id}`)
@@ -117,6 +123,11 @@ export const api = {
     confirmOrder: async (order_id) => {
       return await createResult(
         getInstance().patch(`order/ConfirmOrder/${order_id}`)
+      );
+    },
+    getOrdersByRouteId: async (data) => {
+      return await createResult(
+        getInstance().get(`order/OrdersByRoutId?${querystring.stringify(data)}`)
       );
     },
   },
@@ -136,6 +147,13 @@ export const api = {
         getInstance().get(`truckTrip/truckTripOrderDetails/${truckTrip_id}`)
       );
     },
+    getNewSheduledTruckTrips: async (data) => {
+      return await createResult(
+        getInstance().get(
+          `truckTrip/getSheduledTruckTrip?${querystring.stringify(data)}`
+        )
+      );
+    },
   },
   truckRoute: {
     getTrucks: async (data) => {
@@ -153,11 +171,25 @@ export const api = {
         getInstance().get(`truck/truckRoutes?${querystring.stringify(data)}`)
       );
     },
-    // orderByRouteId: async (data) => {
-    //   return await createResult(
-    //     getInstance().get(`truck/scheduledOrders?${data}`)
-    //   );
-    // },
+    getRouteDetailsByRouteID: async (data) => {
+      return await createResult(
+        getInstance().get(
+          `truck/routeDetailsByRouteID?${querystring.stringify(data)}`
+        )
+      );
+    },
+    getFreeDrivers: async (data) => {
+      return await createResult(
+        getInstance().get(`truck/freeDrivers?${querystring.stringify(data)}`)
+      );
+    },
+    getFreeDriverAssistants: async (data) => {
+      return await createResult(
+        getInstance().get(
+          `truck/freeDriverAssistants?${querystring.stringify(data)}`
+        )
+      );
+    },
   },
   driver: {
     driverDetails: async (store_manager_id) => {
@@ -173,6 +205,94 @@ export const api = {
       );
     },
   },
+
+  delivery_manager: {
+    newOrders: async () => {
+      return await createResult(getInstance().get("deliveryManager/NewOrders"));
+    },
+    getNewOrderDetails: async (order_id) => {
+      return await createResult(
+        getInstance().get(`deliveryManager/NewOrder/${order_id}`)
+      );
+    },
+  },
+  report: {
+    getYearlyIncome: async () => {
+      return await createResult(getInstance().get("report/years-income"));
+    },
+    getQuarterlyIncome: async (year) => {
+      return await createResult(
+        getInstance().get(`report/year-quarterly-income?year=${year}`)
+      );
+    },
+    getBasicOrderDetailsOfQuarter: async (year, quarter) => {
+      return await createResult(
+        getInstance().get(
+          `report/year-quarter-orders-basic?year=${year}&quarter=${quarter}`
+        )
+      );
+    },
+    getOrderCountOfProducts: async (year) => {
+      if (year) {
+        return await createResult(
+          getInstance().get(`report/product-ordered-count?year=${year}`)
+        );
+      }
+      return await createResult(
+        getInstance().get(`report/product-ordered-count`)
+      );
+    },
+    getYears: async () => {
+      return await createResult(getInstance().get("report/all-years"));
+    },
+    getCityRouteIncome: async (year) => {
+      if (year) {
+        return await createResult(
+          getInstance().get(`report/city-route-income?year=${year}`)
+        );
+      }
+      return await createResult(getInstance().get(`report/city-route-income`));
+    },
+    getDriverWorkingHours: async (year, month) => {
+      return await createResult(
+        getInstance().get(
+          `report/working-hours/drivers${year || month ? `?` : ``}${
+            year ? `year=${year}` : ``
+          }${year && month ? `&` : ``}${month ? `month=${month}` : ``}`
+        )
+      );
+    },
+    getDriverAssistantWorkingHours: async (year, month) => {
+      return await createResult(
+        getInstance().get(
+          `report/working-hours/driver-assistants${year || month ? `?` : ``}${
+            year ? `year=${year}` : ``
+          }${year && month ? `&` : ``}${month ? `month=${month}` : ``}`
+        )
+      );
+    },
+    getTruckUsedHours: async (year, month) => {
+      return await createResult(
+        getInstance().get(
+          `report/used-hours/trucks${year || month ? `?` : ``}${
+            year ? `year=${year}` : ``
+          }${year && month ? `&` : ``}${month ? `month=${month}` : ``}`
+        )
+      );
+    },
+    getCustomerOrders: async (year) => {
+      return await createResult(
+        getInstance().get(`report/customer-order${year ? `?year=${year}` : ``}`)
+      );
+    },
+    getCustomerOrderBasicDetails: async (customerId) => {
+      return await createResult(
+        getInstance().get(
+          `report/customer-order-basic-details?customerId=${customerId}`
+        )
+      );
+    },
+  },
   driverAssistant: {
     driverAssistantDetails: async (store_manager_id) => {
       return await createResult(
@@ -183,22 +303,20 @@ export const api = {
     },
     driverAssistantFullDetails: async (driver_assistant_id) => {
       return await createResult(
-        getInstance().get(`driverAssistant/driverAssistantDetails/${driver_assistant_id}`)
+        getInstance().get(
+          `driverAssistant/driverAssistantDetails/${driver_assistant_id}`
+        )
       );
     },
   },
   user: {
     userDetails: async () => {
-      return await createResult(
-        getInstance().get(
-          "user/userDetails"
-        )
-      );
+      return await createResult(getInstance().get("user/userDetails"));
     },
     userFullDetails: async (user_id) => {
       return await createResult(
         getInstance().get(`user/userDetails/${user_id}`)
       );
     },
-  }
+  },
 };

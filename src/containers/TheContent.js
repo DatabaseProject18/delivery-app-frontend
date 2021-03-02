@@ -21,6 +21,8 @@ const TheContent = () => {
               return (
                 route.component && (
                   <ProtectedRoute
+                    isLoggedIn={route.isLoggedIn}
+                    userType={route.userType}
                     key={idx}
                     path={route.path}
                     exact={route.exact}
@@ -34,7 +36,7 @@ const TheContent = () => {
                 )
               );
             })}
-            <Redirect from="/" to="/dashboard" />
+            <Redirect from="/my" to="/my/dashboard" />
           </Switch>
         </Suspense>
       </CContainer>
