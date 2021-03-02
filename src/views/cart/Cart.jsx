@@ -109,6 +109,10 @@ class Cart extends Component {
     }
   };
 
+  handlePlaceOrder = ()=>{
+    this.props.history.push(`/my/PlaceOrder`);
+  }
+
   render() {
     const { cart, modalState } = this.state;
     return (
@@ -183,7 +187,7 @@ class Cart extends Component {
                     Total Cost (Rs) :{" "}
                     {numberWithCommas(this.getTotalCost(cart).toFixed(2))}
                   </h5>
-                  <CButton style={{ marginTop: "1rem" }} color="success">
+                  <CButton onClick={()=>this.handlePlaceOrder()} style={{ marginTop: "1rem" }} color="success">
                     Place Order
                   </CButton>
                 </CCardBody>
