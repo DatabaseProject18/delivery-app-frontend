@@ -125,8 +125,9 @@ class CreateTruckTrip extends Component {
         "m"
       );
       const response = await api.truckRoute.getFreeDrivers(
+        {store_manager_id: isLogin.store_manager_id,
         start_time,
-        end_time
+        end_time}
       );
       //console.log(response);
       if (response.resCode === 200) {
@@ -230,12 +231,15 @@ class CreateTruckTrip extends Component {
   handleChangeTruck = async (e) => {
     this.setState({ selectedTruckID: e.target.value });
   };
+
   handleChangeDriver = async (e) => {
     this.setState({ selectedDriverID: e.target.value });
   };
+
   handleChangeDriverAssistant = async (e) => {
     this.setState({ selectedDriverAssistantID: e.target.value });
   };
+
   handleProductSelect = (index) => {
     const avalableOrdersForRoute = [...this.state.avalableOrdersForRoute];
     avalableOrdersForRoute[index].isSelected = !avalableOrdersForRoute[index]

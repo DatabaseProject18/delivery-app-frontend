@@ -32,7 +32,7 @@ class DriverAssistantDetails extends Component {
   }
 
   handleRowClick = (driver_assistant_id) => {
-    this.props.history.push(`/driverAssistants/${driver_assistant_id}`);
+    this.props.history.push(`/my/driverAssistants/${driver_assistant_id}`);
   };
 
   render() {
