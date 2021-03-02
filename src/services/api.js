@@ -223,6 +223,11 @@ export const api = {
         getInstance().get(`deliveryManager/NewOrder/${order_id}`)
       );
     },
+    getTotalVolume: async (order_id) => {
+      return await createResult(
+          getInstance().get(`deliveryManager/TotalVolume/${order_id}`)
+      );
+    },
   },
   report: {
     getYearlyIncome: async () => {
