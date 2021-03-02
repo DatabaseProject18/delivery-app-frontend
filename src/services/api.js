@@ -32,12 +32,12 @@ const createResult = async (promise) => {
       (result.data.error.single === "Authorization token is not provided" ||
         result.data.error.single === "Authorization token is invalid")
     ) {
-      const res = await getInstance().post("renewAccessToken", {
+      const res = await createResult(getInstance().post("renewAccessToken", {
         refreshToken: localStorage.getItem("scms-refresh-token"),
-      });
+      }));
       console.log(res);
-      if (res.status === 200) {
-        localStorage.setItem("scms-auth-token", res.data.data.single);
+      if (res.resCode === 200) {
+        localStorage.setItem("scms-auth-token", res.result.data.single);
         if (error.response.config.method === "get") {
           return await createResult(
             getInstance()[error.response.config.method](
@@ -97,6 +97,9 @@ export const api = {
       return await createResult(
         getInstance().patch("cart/productDeleteFromCart", data)
       );
+    },
+    newProduct: async (productId) => {
+      return await createResult(getInstance().post(`cart/new-product?product=${productId}`));
     },
   },
   order: {
@@ -321,6 +324,31 @@ export const api = {
     userFullDetails: async (user_id) => {
       return await createResult(
         getInstance().get(`user/userDetails/${user_id}`)
+      );
+    },
+    getUsersDetailsWithAccountStatus: async (user_id) => {
+      return await createResult(
+        getInstance().get(`user/users-details-status`)
+      );
+    },
+    enableAccount: async (user_id) => {
+      return await createResult(
+        getInstance().patch(`admin/account-enable?user=${user_id}`)
+      );
+    },
+    disableAccount: async (user_id) => {
+      return await createResult(
+        getInstance().patch(`admin/account-disable?user=${user_id}`)
+      );
+    },
+  },
+  product: {
+    getCategories: async () => {
+      return await createResult(getInstance().get(`product/all-categories`));
+    },
+    getSearchResult: async (offset,searchQuery,category) => {
+      return await createResult(
+        getInstance().get(`product/search-by-product-name?offset=${offset}&name=${searchQuery}${category ? `&category=${category}` : ``}`)
       );
     },
   },

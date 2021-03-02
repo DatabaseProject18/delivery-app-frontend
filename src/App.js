@@ -41,7 +41,7 @@ class App extends Component {
               exact
               path="/"
               name="Landing Page"
-              render={(props) => <Search {...props} />}
+              render={(props) => <Search {...props} showNav />}
             />
             <ProtectedRoute
               isLoggedIn

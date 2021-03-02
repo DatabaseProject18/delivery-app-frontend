@@ -1,6 +1,7 @@
 import React from "react";
 import { Redirect, Route } from "react-router-dom";
 import { isLogin } from "../../services/auth";
+import { CFade } from "@coreui/react";
 
 const ProtectedRoute = ({ isLoggedIn, userType, location, ...rest }) => {
   if (!isLoggedIn) {
