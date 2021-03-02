@@ -70,7 +70,7 @@ class CreateTruckTrip extends Component {
     if (trucks) this.setState({ trucks: trucks });
     const drivers = await this.getDrivers();
     if (drivers) this.setState({ drivers });
-    const driverAssistants = await this.getDrivers();
+    const driverAssistants = await this.getDriverAssistants();
     if (driverAssistants) this.setState({ driverAssistants });
     const avalableOrdersForRoute = await this.getAvalableOrders();
     console.log(avalableOrdersForRoute);
@@ -120,15 +120,14 @@ class CreateTruckTrip extends Component {
     const routeDetails = this.getRouteDetailsByRouteID();
     if (routeDetails) {
       const start_time = this.state.startTime;
-      const end_time = moment(this.state.startTime).add(
-        routeDetails.average_time * 60,
-        "m"
-      );
-      const response = await api.truckRoute.getFreeDrivers(
-        {store_manager_id: isLogin.store_manager_id,
+      const end_time = moment(this.state.startTime)
+        .add(routeDetails.average_time * 60, "m")
+        .format("YYYY-MM-DDTHH:mm");
+      const response = await api.truckRoute.getFreeDrivers({
+        store_manager_id: isLogin().store_manager_id,
         start_time,
-        end_time}
-      );
+        end_time,
+      });
       //console.log(response);
       if (response.resCode === 200) {
         const drivers = response.result.data.multiple;
@@ -151,10 +150,11 @@ class CreateTruckTrip extends Component {
         routeDetails.average_time * 60,
         "m"
       );
-      const response = await api.truckRoute.getFreeDriverAssistants(
+      const response = await api.truckRoute.getFreeDriverAssistants({
+        store_manager_id: isLogin().store_manager_id,
         start_time,
-        end_time
-      );
+        end_time,
+      });
       //console.log(response);
       if (response.resCode === 200) {
         const driversAssistants = response.result.data.multiple;
@@ -252,6 +252,29 @@ class CreateTruckTrip extends Component {
     if (error) {
       console.log(error);
       this.setState({ error });
+    } else {
+      const truck_route_id = this.state.selectedRouteID;
+      const truck_id = this.state.selectedRouteID;
+      const date_time = moment(this.state.startTime).format(
+        "YYYY-MM-DD HH:mm:ss"
+      );
+      const store_manager_id = isLogin().store_manager_id;
+      const driver_id = this.state.selectedDriverID;
+      const driver_assistant_id = this.state.selectedDriverAssistantID;
+      const selectedOrders = [];
+      this.state.avalableOrdersForRoute.map((e) => {
+        if (e.isSelected) selectedOrders.push(e.order_id);
+      });
+
+      console.log({
+        truck_route_id,
+        truck_id,
+        date_time,
+        store_manager_id,
+        driver_id,
+        driver_assistant_id,
+        selectedOrders,
+      });
     }
   };
 
@@ -291,37 +314,39 @@ class CreateTruckTrip extends Component {
     if (response.resCode === 200) {
       return response.result.data.multiple;
     } else {
-      if (response.result.error.single)
-        toast.error(response.result.error.single);
+      // if (response.result.error.single)
+      //   toast.error(response.result.error.single);
       return null;
     }
   };
 
   isAvalable = (sheduledData, date, what, id) => {
     const givenDateTime = moment(date);
-    for (let i = 0; i < sheduledData.length; i++) {
-      const startTime = moment(sheduledData[i].date_time);
-      const endTime = moment(sheduledData[i].date_time).add(
-        sheduledData[i].average_time * 60,
-        "m"
-      );
-      if (startTime < givenDateTime && endTime > givenDateTime) {
-        if (what === "truck") {
-          if (sheduledData[i].truck_id === id) return false;
-        }
-        if (what === "driver") {
-          let houreCount = 0;
-          sheduledData.map((e) => {
-            if (e.driver_id == id) houreCount += e.average_time;
-          });
-          if (houreCount > 40) return false;
-        }
-        if (what === "driver_assistant") {
-          let houreCount = 0;
-          sheduledData.map((e) => {
-            if (e.driver_assistant_id == id) houreCount += e.average_time;
-          });
-          if (houreCount > 60) return false;
+    if (sheduledData) {
+      for (let i = 0; i < sheduledData.length; i++) {
+        const startTime = moment(sheduledData[i].date_time);
+        const endTime = moment(sheduledData[i].date_time).add(
+          sheduledData[i].average_time * 60,
+          "m"
+        );
+        if (startTime < givenDateTime && endTime > givenDateTime) {
+          if (what === "truck") {
+            if (sheduledData[i].truck_id === id) return false;
+          }
+          if (what === "driver") {
+            let houreCount = 0;
+            sheduledData.map((e) => {
+              if (e.driver_id == id) houreCount += e.average_time;
+            });
+            if (houreCount > 40) return false;
+          }
+          if (what === "driver_assistant") {
+            let houreCount = 0;
+            sheduledData.map((e) => {
+              if (e.driver_assistant_id == id) houreCount += e.average_time;
+            });
+            if (houreCount > 60) return false;
+          }
         }
       }
     }
@@ -341,7 +366,7 @@ class CreateTruckTrip extends Component {
     const selectedOrderCount = this.state.avalableOrdersForRoute.filter(
       (e) => e.isSelected == true
     ).length;
-    if (selectedOrderCount > 0) {
+    if (selectedOrderCount == 0) {
       return "Please select at least one order";
     }
     if (this.getTruckFullProgress() > 100) {
