@@ -68,6 +68,7 @@ const createResult = async(promise) => {
 };
 
 export const api = {
+
         auth: {
             register: async(data) => {
                 return await createResult(getInstance().post("register", data));

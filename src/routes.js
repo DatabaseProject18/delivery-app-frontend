@@ -17,31 +17,41 @@ const DriverDetails = React.lazy(() =>
 const SingleDriver = React.lazy(() =>
     import ("./views/driver/singleDriver"));
 
-const NewOrderDetails = React.lazy(() =>
-    import ("./views/newOrders/newOrders"));
-const SingleOrderDetails = React.lazy(() =>
-    import ("./views/newOrders/newOrderDetails"));
 
-const YearIncome = React.lazy(() =>
-    import ("./views/reports/yearIncome"));
+const NewOrderDetails = React.lazy(() => import("./views/newOrders/newOrders"));
+const SingleOrderDetails = React.lazy(() =>
+  import("./views/newOrders/newOrderDetails")
+);
+
+const YearIncome = React.lazy(() => import("./views/reports/yearIncome"));
 const QuarterlyIncome = React.lazy(() =>
-    import ("./views/reports/quarterlyIncome"));
+  import("./views/reports/quarterlyIncome")
+);
 const BasicOrderDetailsOfQuarter = React.lazy(() =>
-    import ("./views/reports/basicOrderDetailsOfQuarter"));
+  import("./views/reports/basicOrderDetailsOfQuarter")
+);
 const MostOrderedProduct = React.lazy(() =>
-    import ("./views/reports/mostOrderedProduct"));
+  import("./views/reports/mostOrderedProduct")
+);
 const CityRouteIncome = React.lazy(() =>
-    import ("./views/reports/cityRouteIncome"));
+  import("./views/reports/cityRouteIncome")
+);
 const DriverWorkingHours = React.lazy(() =>
-    import ("./views/reports/driverWorkingHours"));
+  import("./views/reports/driverWorkingHours")
+);
 const DriverAssistantWorkingHours = React.lazy(() =>
-    import ("./views/reports/driverAssistantWorkingHours"));
+  import("./views/reports/driverAssistantWorkingHours")
+);
 const TruckUsedHours = React.lazy(() =>
-    import ("./views/reports/truckUsedHours"));
+  import("./views/reports/truckUsedHours")
+);
 const CustomerOrders = React.lazy(() =>
-    import ("./views/reports/customerOrder"));
+  import("./views/reports/customerOrder")
+);
 const CustomerOrderDetails = React.lazy(() =>
-    import ("./views/reports/customerOrderDetails"));
+  import("./views/reports/customerOrderDetails")
+);
+
 
 const SheduledTruckTrips = React.lazy(() =>
     import ("./views/truckTrip/SheduledTruckTrips")
@@ -60,6 +70,7 @@ const Users = React.lazy(() =>
     import ("./views/user/users"));
 const User = React.lazy(() =>
     import ("./views/user/user"));
+
 
 const PlaceOrder = React.lazy(() =>
     import ("./views/placeOrder/placeOrder"));
@@ -102,6 +113,7 @@ const routes = [
         component: SingleDriver,
     },
 
+
     { path: "/my/drivers", name: "DriverDetails", component: DriverDetails },
     {
         path: "/my/sheduled-truck-trips",
@@ -113,6 +125,7 @@ const routes = [
         name: "Create TruckTrip",
         component: CreateTruckTrip,
     },
+
 
     { path: "/my/drivers", name: "Driver Details", component: DriverDetails },
     {
