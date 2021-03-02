@@ -128,6 +128,11 @@ export const api = {
         getInstance().patch(`order/ConfirmOrder/${order_id}`)
       );
     },
+    getOrdersByRouteId: async (data) => {
+      return await createResult(
+        getInstance().get(`order/OrdersByRoutId?${querystring.stringify(data)}`)
+      );
+    },
   },
   truckTrip: {
     getSheduledTruckTrips: async (data) => {
@@ -145,6 +150,13 @@ export const api = {
         getInstance().get(`truckTrip/truckTripOrderDetails/${truckTrip_id}`)
       );
     },
+    getNewSheduledTruckTrips: async (data) => {
+      return await createResult(
+        getInstance().get(
+          `truckTrip/getSheduledTruckTrip?${querystring.stringify(data)}`
+        )
+      );
+    },
   },
   truckRoute: {
     getTrucks: async (data) => {
@@ -160,6 +172,25 @@ export const api = {
     getTruckRoutes: async (data) => {
       return await createResult(
         getInstance().get(`truck/truckRoutes?${querystring.stringify(data)}`)
+      );
+    },
+    getRouteDetailsByRouteID: async (data) => {
+      return await createResult(
+        getInstance().get(
+          `truck/routeDetailsByRouteID?${querystring.stringify(data)}`
+        )
+      );
+    },
+    getFreeDrivers: async (data) => {
+      return await createResult(
+        getInstance().get(`truck/freeDrivers?${querystring.stringify(data)}`)
+      );
+    },
+    getFreeDriverAssistants: async (data) => {
+      return await createResult(
+        getInstance().get(
+          `truck/freeDriverAssistants?${querystring.stringify(data)}`
+        )
       );
     },
   },
