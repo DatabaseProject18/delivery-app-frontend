@@ -32,7 +32,7 @@ class DriverDetails extends Component {
   }
 
   handleRowClick = (driver_id) => {
-    this.props.history.push(`/drivers/${driver_id}`);
+    this.props.history.push(`/my/drivers/${driver_id}`);
   };
 
   render() {

@@ -43,6 +43,26 @@ class Cart extends Component {
     }
   }
 
+  async componentDidUpdate() {
+    const response = await api.cart.getCart({
+      customer_id: isLogin().customer_id,
+    });
+    console.log(response);
+    if (response.resCode === 200) {
+      let data = response.result.data.multiple;
+      data.map((e) => {
+        if (e.quantity > e.stock) e.quantity = e.stock;
+      });
+      if (JSON.stringify(this.state.cart) != JSON.stringify(data)) {
+        this.setState({ cart: data });
+        //console.log(data);
+      }
+    } else {
+      if (response.result.error.single)
+        toast.error(response.result.error.single);
+    }
+  }
+
   componentWillUnmount() {
     toast.dismiss();
   }

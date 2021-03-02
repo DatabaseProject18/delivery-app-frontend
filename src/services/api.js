@@ -115,10 +115,8 @@ export const api = {
         getInstance().get(`order/order-count-by-status`)
       );
     },
-    cancelOrder: async (order_id) => {
-      return await createResult(
-        getInstance().patch(`order/CancelOrder/${order_id}`)
-      );
+    cancelOrder: async (data) => {
+      return await createResult(getInstance().patch(`order/CancelOrder`, data));
     },
     confirmOrder: async (order_id) => {
       return await createResult(
