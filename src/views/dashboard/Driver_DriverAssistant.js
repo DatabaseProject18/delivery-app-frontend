@@ -85,6 +85,8 @@ class MyTrips extends Component {
 
   render() {
     const { truckTripsDetais, fields, isPastTruckTrip, userType } = this.state;
+
+    console.log(this.props);
     return (
       <CRow>
         <CCol>
@@ -93,7 +95,7 @@ class MyTrips extends Component {
               <h4>My Truck Trip</h4>
             </CCardHeader>
             <CCardBody>
-              <CButton
+              {/* <CButton
                 className="mb-3"
                 active={isPastTruckTrip}
                 onClick={() => this.handlePastTrips()}
@@ -101,7 +103,7 @@ class MyTrips extends Component {
                 color="primary"
               >
                 Past Trip
-              </CButton>
+              </CButton> */}
               {truckTripsDetais.length > 0 && (
                 <CDataTable
                   items={truckTripsDetais}
@@ -112,9 +114,9 @@ class MyTrips extends Component {
                   size="md"
                   itemsPerPage={10}
                   pagination
-                  sorter
-                  onRowClick={(e) => this.handleOnRowClick(e.truck_schedule_id)}
-                  clickableRows
+                  //sorter
+                  //onRowClick={(e) => this.handleOnRowClick(e.truck_schedule_id)}
+                  //clickableRows
                 />
               )}
             </CCardBody>

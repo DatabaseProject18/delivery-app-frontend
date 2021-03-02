@@ -40,7 +40,7 @@ class Users extends Component {
   }
 
   handleRowClick = (user_id) => {
-    this.props.history.push(`/users/${user_id}`);
+    this.props.history.push(`/my/users/${user_id}`);
   };
 
   render() {
