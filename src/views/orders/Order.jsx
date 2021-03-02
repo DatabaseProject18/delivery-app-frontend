@@ -56,7 +56,14 @@ class Order extends Component {
       e.order_status = "Canceled";
     });
     this.setState({ pastOrderData: temp });
-    const response = await api.order.cancelOrder(this.state.order_id);
+    const orderDetails = this.state.pastOrderData.map((e) => {
+      return { product_id: e.product_id, quantity: e.quantity };
+    });
+
+    const response = await api.order.cancelOrder({
+      order_id: this.state.order_id,
+      orderDetails,
+    });
     //console.log(response);
     if (response.resCode !== 200) {
       this.setState({ pastOrderData: backup });
@@ -65,7 +72,11 @@ class Order extends Component {
 
   render() {
     const { order_id, pastOrderData, cancelBtn } = this.state;
-
+    // console.log(
+    //   pastOrderData.map((e) => {
+    //     return { order_id: e.order_id, quantity: e.quantity };
+    //   })
+    // );
     return (
       <CRow>
         <CCol>
