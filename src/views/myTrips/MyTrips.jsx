@@ -52,7 +52,7 @@ class MyTrips extends Component {
 
   handleOnRowClick = (truck_schedule_id) => {
     if (this.state.userType === "driver_assistant") {
-      this.props.history.push(`/my-trips/${truck_schedule_id}`);
+      this.props.history.push(`/my/my-trips/${truck_schedule_id}`);
     }
   };
 

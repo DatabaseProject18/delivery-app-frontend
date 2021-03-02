@@ -231,6 +231,7 @@ export const api = {
                     return await createResult(
                             getInstance().get(
                                 `report/working-hours/drivers${year || month ? `?` : ``}${
+
             year ? `year=${year}` : ``
           }${year && month ? `&` : ``}${month ? `month=${month}` : ``}`
         )
@@ -292,6 +293,5 @@ export const api = {
         getInstance().get(`user/userDetails/${user_id}`)
       );
     },
-
   },
 };
