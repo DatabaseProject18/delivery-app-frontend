@@ -43,6 +43,26 @@ class Cart extends Component {
     }
   }
 
+  async componentDidUpdate() {
+    const response = await api.cart.getCart({
+      customer_id: isLogin().customer_id,
+    });
+    console.log(response);
+    if (response.resCode === 200) {
+      let data = response.result.data.multiple;
+      data.map((e) => {
+        if (e.quantity > e.stock) e.quantity = e.stock;
+      });
+      if (JSON.stringify(this.state.cart) != JSON.stringify(data)) {
+        this.setState({ cart: data });
+        //console.log(data);
+      }
+    } else {
+      if (response.result.error.single)
+        toast.error(response.result.error.single);
+    }
+  }
+
   componentWillUnmount() {
     toast.dismiss();
   }
@@ -108,6 +128,10 @@ class Cart extends Component {
         toast.error(response.result.error.single);
     }
   };
+
+  handlePlaceOrder = ()=>{
+    this.props.history.push(`/my/PlaceOrder`);
+  }
 
   render() {
     const { cart, modalState } = this.state;
@@ -183,7 +207,7 @@ class Cart extends Component {
                     Total Cost (Rs) :{" "}
                     {numberWithCommas(this.getTotalCost(cart).toFixed(2))}
                   </h5>
-                  <CButton style={{ marginTop: "1rem" }} color="success">
+                  <CButton onClick={()=>this.handlePlaceOrder()} style={{ marginTop: "1rem" }} color="success">
                     Place Order
                   </CButton>
                 </CCardBody>

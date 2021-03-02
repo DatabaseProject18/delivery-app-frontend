@@ -3,6 +3,7 @@ import { isLogin } from "../../services/auth";
 import CompanyManagerDashboard from "./companyManagerDashboard";
 import SearchPage from "../pages/landing/mainSearch";
 import AdminDashboard from "./adminDashboard";
+import Driver_DriverAssistant from "./Driver_DriverAssistant";
 
 const Dashboard = ({ history }) => {
   const user = isLogin();
@@ -15,6 +16,10 @@ const Dashboard = ({ history }) => {
         return <SearchPage history={history} />;
       case "admin":
         return <AdminDashboard />;
+      case "driver":
+        return <Driver_DriverAssistant />;
+      case "driver_assistant":
+        return <Driver_DriverAssistant />;
       default:
         return <div>This is a default dashboard</div>;
     }

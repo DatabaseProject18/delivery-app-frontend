@@ -128,6 +128,11 @@ export const api = {
         getInstance().patch(`order/ConfirmOrder/${order_id}`)
       );
     },
+    createOrder: async (order_id) => {
+      return await createResult(
+        getInstance().patch("order/CreateOrder/${order_id}")
+      );
+    },
     getOrdersByRouteId: async (data) => {
       return await createResult(
         getInstance().get(`order/OrdersByRoutId?${querystring.stringify(data)}`)
