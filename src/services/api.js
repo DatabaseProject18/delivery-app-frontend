@@ -138,6 +138,11 @@ export const api = {
     },
   },
   truckRoute: {
+    getTrucks: async (data) => {
+      return await createResult(
+        getInstance().get(`truck/trucks?${querystring.stringify(data)}`)
+      );
+    },
     getTruckRouteByID: async (truck_route_id) => {
       return await createResult(
         getInstance().get(`truck/truckRouteByID/${truck_route_id}`)
@@ -148,6 +153,11 @@ export const api = {
         getInstance().get(`truck/truckRoutes?${querystring.stringify(data)}`)
       );
     },
+    // orderByRouteId: async (data) => {
+    //   return await createResult(
+    //     getInstance().get(`truck/scheduledOrders?${data}`)
+    //   );
+    // },
   },
   driver: {
     driverDetails: async (store_manager_id) => {
