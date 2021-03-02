@@ -60,6 +60,7 @@ class NewSingleOrderDetails extends Component {
                 </CCol>
 
 
+
             </CRow>
 
         );
