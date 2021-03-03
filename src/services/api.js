@@ -32,9 +32,11 @@ const createResult = async (promise) => {
       (result.data.error.single === "Authorization token is not provided" ||
         result.data.error.single === "Authorization token is invalid")
     ) {
-      const res = await createResult(getInstance().post("renewAccessToken", {
-        refreshToken: localStorage.getItem("scms-refresh-token"),
-      }));
+      const res = await createResult(
+        getInstance().post("renewAccessToken", {
+          refreshToken: localStorage.getItem("scms-refresh-token"),
+        })
+      );
       console.log(res);
       if (res.resCode === 200) {
         localStorage.setItem("scms-auth-token", res.result.data.single);
@@ -99,7 +101,9 @@ export const api = {
       );
     },
     newProduct: async (productId) => {
-      return await createResult(getInstance().post(`cart/new-product?product=${productId}`));
+      return await createResult(
+        getInstance().post(`cart/new-product?product=${productId}`)
+      );
     },
   },
   order: {
@@ -128,10 +132,8 @@ export const api = {
         getInstance().patch(`order/ConfirmOrder/${order_id}`)
       );
     },
-    createOrder: async (order_id) => {
-      return await createResult(
-        getInstance().patch("order/CreateOrder/${order_id}")
-      );
+    createOrder: async (data) => {
+      return await createResult(getInstance().post("order/CreateOrder", data));
     },
     getOrdersByRouteId: async (data) => {
       return await createResult(
@@ -198,6 +200,19 @@ export const api = {
         )
       );
     },
+
+    getRoute: async () => {
+      return await createResult(getInstance().get(`truck/Routes`));
+    },
+    createTruckTrip: async (data) => {
+      console.log(data);
+      return await createResult(
+        getInstance().post(
+          "truck/newTruckTrip",data
+        )
+      );
+
+    },
   },
   driver: {
     driverDetails: async (store_manager_id) => {
@@ -225,7 +240,7 @@ export const api = {
     },
     getTotalVolume: async (order_id) => {
       return await createResult(
-          getInstance().get(`deliveryManager/TotalVolume/${order_id}`)
+        getInstance().get(`deliveryManager/TotalVolume/${order_id}`)
       );
     },
     rejectOrder: async (order_id) => {
@@ -357,9 +372,7 @@ export const api = {
       );
     },
     getUsersDetailsWithAccountStatus: async (user_id) => {
-      return await createResult(
-        getInstance().get(`user/users-details-status`)
-      );
+      return await createResult(getInstance().get(`user/users-details-status`));
     },
     enableAccount: async (user_id) => {
       return await createResult(
@@ -376,9 +389,13 @@ export const api = {
     getCategories: async () => {
       return await createResult(getInstance().get(`product/all-categories`));
     },
-    getSearchResult: async (offset,searchQuery,category) => {
+    getSearchResult: async (offset, searchQuery, category) => {
       return await createResult(
-        getInstance().get(`product/search-by-product-name?offset=${offset}&name=${searchQuery}${category ? `&category=${category}` : ``}`)
+        getInstance().get(
+          `product/search-by-product-name?offset=${offset}&name=${searchQuery}${
+            category ? `&category=${category}` : ``
+          }`
+        )
       );
     },
   },

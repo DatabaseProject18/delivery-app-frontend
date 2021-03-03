@@ -100,9 +100,7 @@ class CreateTruckTrip extends Component {
     );
     if (response.resCode === 200) {
       const truckData = response.result.data.multiple;
-      const sheduledData = await this.getScheduledData(moment(this.state.startTime).format(
-        "YYYY-MM-DD HH:mm:ss"
-      ));
+      const sheduledData = await this.getScheduledData(this.state.startTime);
       const filteredTrucks = truckData.filter((e) =>
         this.isAvalable(sheduledData, this.state.startTime, "truck", e.truck_id)
       );
@@ -121,15 +119,11 @@ class CreateTruckTrip extends Component {
   getDrivers = async () => {
     const routeDetails = this.getRouteDetailsByRouteID();
     if (routeDetails) {
-      const start_time = moment(this.state.startTime).format(
-        "YYYY-MM-DD HH:mm:ss"
-      );
+      const start_time = this.state.startTime;
       const end_time = moment(this.state.startTime)
         .add(routeDetails.average_time * 60, "m")
-        .format("YYYY-MM-DD HH:mm:ss");
-      //console.log(this.handleCreate.truck_route_id);
+        .format("YYYY-MM-DDTHH:mm");
       const response = await api.truckRoute.getFreeDrivers({
-        truck_route_id: this.state.selectedRouteID,
         store_manager_id: isLogin().store_manager_id,
         start_time,
         end_time,
@@ -151,15 +145,12 @@ class CreateTruckTrip extends Component {
   getDriverAssistants = async () => {
     const routeDetails = this.getRouteDetailsByRouteID();
     if (routeDetails) {
-      const start_time = moment(this.state.startTime).format(
-        "YYYY-MM-DD HH:mm:ss"
-      );
+      const start_time = this.state.startTime;
       const end_time = moment(this.state.startTime).add(
         routeDetails.average_time * 60,
         "m"
       );
       const response = await api.truckRoute.getFreeDriverAssistants({
-        truck_route_id: this.state.selectedRouteID,
         store_manager_id: isLogin().store_manager_id,
         start_time,
         end_time,
@@ -262,51 +253,29 @@ class CreateTruckTrip extends Component {
       console.log(error);
       this.setState({ error });
     } else {
-      const truckRouteId = this.state.selectedRouteID;
-      const truckId = this.state.selectedTruckID;
-      const dateTime = moment(this.state.startTime).format(
+      const truck_route_id = this.state.selectedRouteID;
+      const truck_id = this.state.selectedRouteID;
+      const date_time = moment(this.state.startTime).format(
         "YYYY-MM-DD HH:mm:ss"
       );
-      const storeManagerId = isLogin().store_manager_id;
-      const driverId = this.state.selectedDriverID;
-      const driverAssistantId = this.state.selectedDriverAssistantID;
-      const orderIds = [];
+      const store_manager_id = isLogin().store_manager_id;
+      const driver_id = this.state.selectedDriverID;
+      const driver_assistant_id = this.state.selectedDriverAssistantID;
+      const selectedOrders = [];
       this.state.avalableOrdersForRoute.map((e) => {
-        if (e.isSelected) orderIds.push(e.order_id);
+        if (e.isSelected) selectedOrders.push(e.order_id);
       });
-      const numOfOrders = orderIds.length;
 
-      // console.log({
-      //   truckRouteId,
-      //   truckId,
-      //   dateTime,
-      //   storeManagerId,
-      //   driverId,
-      //   driverAssistantId,
-      //   orderIds,
-      // });
-      api.truckRoute.createTruckTrip({
-        truckRouteId,
-        truckId,
-        dateTime,
-        storeManagerId,
-        driverId,
-        driverAssistantId,
-        orderIds,
-        numOfOrders 
+      console.log({
+        truck_route_id,
+        truck_id,
+        date_time,
+        store_manager_id,
+        driver_id,
+        driver_assistant_id,
+        selectedOrders,
       });
     }
-
-    this.setState({ trucks: [] });
-    this.setState({ drivers: [] });
-    this.setState({ driverAssistants: [] });
-    this.setState({ avalableOrdersForRoute: [] });
-    this.setState({ selectedRouteID: 1 });
-    this.setState({ startTime: moment(new Date()).format("YYYY-MM-DDTHH:mm") });
-    this.setState({ selectedTruckID: 0 });
-    this.setState({ selectedDriverID: 0 });
-    this.setState({ selectedDriverAssistantID: 0 });
-    this.setState({ error: null });
   };
 
   truckRoute = (data) => {
