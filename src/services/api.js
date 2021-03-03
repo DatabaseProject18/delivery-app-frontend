@@ -228,6 +228,31 @@ export const api = {
           getInstance().get(`deliveryManager/TotalVolume/${order_id}`)
       );
     },
+    rejectOrder: async (order_id) => {
+      return await createResult(
+          getInstance().delete(`deliveryManager/RejectOrder/${order_id}`)
+      );
+    },
+    getTrainList: async (order_id) => {
+      return await createResult(
+          getInstance().get(`deliveryManager/TrainsForTrip/${order_id}`)
+      );
+    },
+    getTimeSlot: async (train_id) => {
+      return await createResult(
+          getInstance().get(`deliveryManager/TrainTimeSlots/${train_id}`)
+      );
+    },
+    shipOrder: async (order_id) => {
+      return await createResult(
+          getInstance().patch(`deliveryManager/ShipOrder/${order_id}`)
+      );
+    },
+    createTrainSchedule: async (order_id, train_time_table_id, delivery_manager_id) => {
+      return await createResult(
+          getInstance().post(`deliveryManager/scheduleTrain/${order_id}/${train_time_table_id}/${delivery_manager_id}`)
+      );
+    },
   },
   report: {
     getYearlyIncome: async () => {

@@ -97,7 +97,7 @@ const routes = [
   { path: "/my/working-hours/trucks", name: "Trucks Working Hours", component: TruckUsedHours },
   { path: "/my/customer-order/:customerId", name: "Basic Details", component: CustomerOrderDetails },
   { path: "/my/customer-order", name: "Customer Orders", component: CustomerOrders },
-  { path: "/my/newOrders",name: "NewOrders",component: NewOrderDetails},
+  // { path: "/my/newOrders",name: "NewOrders",component: NewOrderDetails},
   { path: "/my/newOrder/:order_id", name: "NewSingleOrder",component: SingleOrderDetails},
   { path: "/yearly-income", name: "Sales Income", component: YearIncome },
   { path: "/quarterly-income/:year", name: "Quarterly Income", component: QuarterlyIncome },
