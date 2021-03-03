@@ -4,7 +4,11 @@ import CompanyManagerDashboard from "./companyManagerDashboard";
 import SearchPage from "../pages/landing/mainSearch";
 import AdminDashboard from "./adminDashboard";
 import Driver_DriverAssistant from "./Driver_DriverAssistant";
+
+import Delivery_Manager from "../newOrders/newOrders";
+
 import StoreManagerDashboard from "../truckTrip/CreateTruckTrip";
+
 
 const Dashboard = ({ history }) => {
   const user = isLogin();
@@ -21,6 +25,8 @@ const Dashboard = ({ history }) => {
         return <Driver_DriverAssistant />;
       case "driver_assistant":
         return <Driver_DriverAssistant />;
+      case "delivery_manager":
+        return <Delivery_Manager history={history}/>
       case "store_manager":
         return <StoreManagerDashboard />;
       default:

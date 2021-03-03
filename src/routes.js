@@ -76,6 +76,19 @@ const routes = [
   },
   { path: "/my/drivers", name: "Driver Details", component: DriverDetails },
   { path: "/my/yearly-income", name: "Sales Income", component: YearIncome },
+
+  { path: "/my/quarterly-income/:year", name: "Quarterly Income", component: QuarterlyIncome },
+  { path: "/my/quarter-orders-basic/:year/:quarter", name: "Basic Order Details", component: BasicOrderDetailsOfQuarter },
+  { path: "/my/most-ordered-product", name: "Sales Of Products", component: MostOrderedProduct },
+  { path: "/my/sales-income-city", name: "Sales Income of Each City", component: CityRouteIncome },
+  { path: "/my/working-hours/drivers", name: "Drivers Working Hours", component: DriverWorkingHours },
+  { path: "/my/working-hours/driver-assistants", name: "Drivers Assistants Working Hours", component: DriverAssistantWorkingHours },
+  { path: "/my/working-hours/trucks", name: "Trucks Working Hours", component: TruckUsedHours },
+  { path: "/my/customer-order/:customerId", name: "Basic Details", component: CustomerOrderDetails },
+  { path: "/my/customer-order", name: "Customer Orders", component: CustomerOrders },
+  
+  { path: "/my/newOrder/:order_id", name: "NewSingleOrder",component: SingleOrderDetails},
+
   {
     path: "/my/quarterly-income/:year",
     name: "Quarterly Income",
@@ -127,6 +140,7 @@ const routes = [
     name: "NewSingleOrder",
     component: SingleOrderDetails,
   },
+
   { path: "/yearly-income", name: "Sales Income", component: YearIncome },
   {
     path: "/quarterly-income/:year",
