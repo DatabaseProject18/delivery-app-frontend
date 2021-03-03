@@ -200,8 +200,18 @@ export const api = {
         )
       );
     },
+
     getRoute: async () => {
       return await createResult(getInstance().get(`truck/Routes`));
+    },
+    createTruckTrip: async (data) => {
+      console.log(data);
+      return await createResult(
+        getInstance().post(
+          "truck/newTruckTrip",data
+        )
+      );
+
     },
   },
   driver: {
