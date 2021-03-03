@@ -4,7 +4,7 @@ import CompanyManagerDashboard from "./companyManagerDashboard";
 import SearchPage from "../pages/landing/mainSearch";
 import AdminDashboard from "./adminDashboard";
 import Driver_DriverAssistant from "./Driver_DriverAssistant";
-import StoreManagerDashboard from "./storeManagerDashboard";
+import StoreManagerDashboard from "../truckTrip/CreateTruckTrip";
 
 const Dashboard = ({ history }) => {
   const user = isLogin();

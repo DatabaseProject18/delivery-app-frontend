@@ -198,6 +198,14 @@ export const api = {
         )
       );
     },
+    createTruckTrip: async (data) => {
+      console.log(data);
+      return await createResult(
+        getInstance().post(
+          "truck/newTruckTrip",data
+        )
+      );
+    },
   },
   driver: {
     driverDetails: async (store_manager_id) => {

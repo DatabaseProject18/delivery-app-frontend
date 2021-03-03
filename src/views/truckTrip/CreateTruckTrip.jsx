@@ -100,7 +100,9 @@ class CreateTruckTrip extends Component {
     );
     if (response.resCode === 200) {
       const truckData = response.result.data.multiple;
-      const sheduledData = await this.getScheduledData(this.state.startTime);
+      const sheduledData = await this.getScheduledData(moment(this.state.startTime).format(
+        "YYYY-MM-DD HH:mm:ss"
+      ));
       const filteredTrucks = truckData.filter((e) =>
         this.isAvalable(sheduledData, this.state.startTime, "truck", e.truck_id)
       );
@@ -119,10 +121,12 @@ class CreateTruckTrip extends Component {
   getDrivers = async () => {
     const routeDetails = this.getRouteDetailsByRouteID();
     if (routeDetails) {
-      const start_time = this.state.startTime;
+      const start_time = moment(this.state.startTime).format(
+        "YYYY-MM-DD HH:mm:ss"
+      );
       const end_time = moment(this.state.startTime)
         .add(routeDetails.average_time * 60, "m")
-        .format("YYYY-MM-DDTHH:mm");
+        .format("YYYY-MM-DD HH:mm:ss");
       //console.log(this.handleCreate.truck_route_id);
       const response = await api.truckRoute.getFreeDrivers({
         truck_route_id: this.state.selectedRouteID,
@@ -147,12 +151,15 @@ class CreateTruckTrip extends Component {
   getDriverAssistants = async () => {
     const routeDetails = this.getRouteDetailsByRouteID();
     if (routeDetails) {
-      const start_time = this.state.startTime;
+      const start_time = moment(this.state.startTime).format(
+        "YYYY-MM-DD HH:mm:ss"
+      );
       const end_time = moment(this.state.startTime).add(
         routeDetails.average_time * 60,
         "m"
       );
       const response = await api.truckRoute.getFreeDriverAssistants({
+        truck_route_id: this.state.selectedRouteID,
         store_manager_id: isLogin().store_manager_id,
         start_time,
         end_time,
@@ -277,7 +284,26 @@ class CreateTruckTrip extends Component {
         driver_assistant_id,
         selectedOrders,
       });
+      api.truckRoute.createTruckTrip({
+        truck_route_id,
+        truck_id,
+        date_time,
+        store_manager_id,
+        driver_id,
+        driver_assistant_id
+      });
     }
+
+    this.setState({ trucks: [] });
+    this.setState({ drivers: [] });
+    this.setState({ driverAssistants: [] });
+    this.setState({ avalableOrdersForRoute: [] });
+    this.setState({ selectedRouteID: 1 });
+    this.setState({ startTime: moment(new Date()).format("YYYY-MM-DDTHH:mm") });
+    this.setState({ selectedTruckID: 0 });
+    this.setState({ selectedDriverID: 0 });
+    this.setState({ selectedDriverAssistantID: 0 });
+    this.setState({ error: null });
   };
 
   truckRoute = (data) => {
