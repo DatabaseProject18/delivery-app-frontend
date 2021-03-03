@@ -37,6 +37,13 @@ const _nav = [
     userType: "store_manager",
   },
   {
+    _tag: "CSidebarNavItem",
+    name: "Create Truck Trip",
+    to: "/my/create-truck-trips",
+    icon: <CIcon name="cil-truck" customClasses="c-sidebar-nav-icon" />,
+    userType: "store_manager",
+  },
+  {
     _tag: "CSidebarNavDivider",
     userType: ["company_manager"],
   },

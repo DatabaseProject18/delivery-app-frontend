@@ -123,9 +123,7 @@ class CreateTruckTrip extends Component {
       const end_time = moment(this.state.startTime)
         .add(routeDetails.average_time * 60, "m")
         .format("YYYY-MM-DDTHH:mm");
-      //console.log(this.handleCreate.truck_route_id);
       const response = await api.truckRoute.getFreeDrivers({
-        truck_route_id: this.state.selectedRouteID,
         store_manager_id: isLogin().store_manager_id,
         start_time,
         end_time,
@@ -256,7 +254,7 @@ class CreateTruckTrip extends Component {
       this.setState({ error });
     } else {
       const truck_route_id = this.state.selectedRouteID;
-      const truck_id = this.state.selectedTruckID;
+      const truck_id = this.state.selectedRouteID;
       const date_time = moment(this.state.startTime).format(
         "YYYY-MM-DD HH:mm:ss"
       );

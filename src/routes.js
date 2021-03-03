@@ -85,7 +85,7 @@ const routes = [
   { path: "/my/my-orders", name: "MyOrders", component: MyOrders },
   { path: "/my/my-trips/:trip_id", name: "Details", component: TripsDetails },
   { path: "/my/my-trips", name: "MyTrips", component: MyTrips },
-  { path: "/my/drivers/:driver_id", name: "Full Driver Details", Component: SingleDriver},
+  { path: "/my/drivers/:driver_id", name: "Full Driver Details", component: SingleDriver},
   { path: "/my/drivers", name: "Driver Details", component: DriverDetails },
   { path: "/my/yearly-income", name: "Sales Income", component: YearIncome },
   { path: "/my/quarterly-income/:year", name: "Quarterly Income", component: QuarterlyIncome },

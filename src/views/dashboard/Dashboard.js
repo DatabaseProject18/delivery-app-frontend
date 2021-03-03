@@ -4,6 +4,7 @@ import CompanyManagerDashboard from "./companyManagerDashboard";
 import SearchPage from "../pages/landing/mainSearch";
 import AdminDashboard from "./adminDashboard";
 import Driver_DriverAssistant from "./Driver_DriverAssistant";
+import StoreManagerDashboard from "./storeManagerDashboard";
 
 const Dashboard = ({ history }) => {
   const user = isLogin();
@@ -20,6 +21,8 @@ const Dashboard = ({ history }) => {
         return <Driver_DriverAssistant />;
       case "driver_assistant":
         return <Driver_DriverAssistant />;
+      case "store_manager":
+        return <StoreManagerDashboard />;
       default:
         return <div>This is a default dashboard</div>;
     }
