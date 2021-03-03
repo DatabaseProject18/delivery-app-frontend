@@ -262,35 +262,38 @@ class CreateTruckTrip extends Component {
       console.log(error);
       this.setState({ error });
     } else {
-      const truck_route_id = this.state.selectedRouteID;
-      const truck_id = this.state.selectedTruckID;
-      const date_time = moment(this.state.startTime).format(
+      const truckRouteId = this.state.selectedRouteID;
+      const truckId = this.state.selectedTruckID;
+      const dateTime = moment(this.state.startTime).format(
         "YYYY-MM-DD HH:mm:ss"
       );
-      const store_manager_id = isLogin().store_manager_id;
-      const driver_id = this.state.selectedDriverID;
-      const driver_assistant_id = this.state.selectedDriverAssistantID;
-      const selectedOrders = [];
+      const storeManagerId = isLogin().store_manager_id;
+      const driverId = this.state.selectedDriverID;
+      const driverAssistantId = this.state.selectedDriverAssistantID;
+      const orderIds = [];
       this.state.avalableOrdersForRoute.map((e) => {
-        if (e.isSelected) selectedOrders.push(e.order_id);
+        if (e.isSelected) orderIds.push(e.order_id);
       });
+      const numOfOrders = orderIds.length;
 
-      console.log({
-        truck_route_id,
-        truck_id,
-        date_time,
-        store_manager_id,
-        driver_id,
-        driver_assistant_id,
-        selectedOrders,
-      });
+      // console.log({
+      //   truckRouteId,
+      //   truckId,
+      //   dateTime,
+      //   storeManagerId,
+      //   driverId,
+      //   driverAssistantId,
+      //   orderIds,
+      // });
       api.truckRoute.createTruckTrip({
-        truck_route_id,
-        truck_id,
-        date_time,
-        store_manager_id,
-        driver_id,
-        driver_assistant_id
+        truckRouteId,
+        truckId,
+        dateTime,
+        storeManagerId,
+        driverId,
+        driverAssistantId,
+        orderIds,
+        numOfOrders 
       });
     }
 
