@@ -29,11 +29,21 @@ class Cart extends Component {
     const response = await api.cart.getCart({
       customer_id: isLogin().customer_id,
     });
-    console.log(response);
+    //console.log(response);
     if (response.resCode === 200) {
       let data = response.result.data.multiple;
-      data.map((e) => {
-        if (e.quantity > e.stock) e.quantity = e.stock;
+      data.map(async (e) => {
+        if (e.quantity > e.stock) {
+          e.quantity = e.stock;
+          await api.cart.setCartQuntity({
+            customer_id: isLogin().customer_id,
+            quantity: e.stock,
+            cart_id: e.cart_id,
+          });
+          if (e.stock == 0) {
+            await api.cart.productDeleteFromCart({ cart_id: e.cart_id });
+          }
+        }
       });
       this.setState({ cart: data });
       //console.log(data);
@@ -47,11 +57,21 @@ class Cart extends Component {
     const response = await api.cart.getCart({
       customer_id: isLogin().customer_id,
     });
-    console.log(response);
+    //console.log(response);
     if (response.resCode === 200) {
       let data = response.result.data.multiple;
-      data.map((e) => {
-        if (e.quantity > e.stock) e.quantity = e.stock;
+      data.map(async (e) => {
+        if (e.quantity > e.stock) {
+          e.quantity = e.stock;
+          await api.cart.setCartQuntity({
+            customer_id: isLogin().customer_id,
+            quantity: e.stock,
+            cart_id: e.cart_id,
+          });
+          if (e.stock == 0) {
+            await api.cart.productDeleteFromCart({ cart_id: e.cart_id });
+          }
+        }
       });
       if (JSON.stringify(this.state.cart) != JSON.stringify(data)) {
         this.setState({ cart: data });
@@ -62,6 +82,10 @@ class Cart extends Component {
         toast.error(response.result.error.single);
     }
   }
+
+  // productDeletFromCart = async (cart_id) => {
+  //   await api.cart.productDeleteFromCart({ cart_id });
+  // };
 
   componentWillUnmount() {
     toast.dismiss();
@@ -129,9 +153,9 @@ class Cart extends Component {
     }
   };
 
-  handlePlaceOrder = ()=>{
+  handlePlaceOrder = () => {
     this.props.history.push(`/my/PlaceOrder`);
-  }
+  };
 
   render() {
     const { cart, modalState } = this.state;
@@ -207,7 +231,11 @@ class Cart extends Component {
                     Total Cost (Rs) :{" "}
                     {numberWithCommas(this.getTotalCost(cart).toFixed(2))}
                   </h5>
-                  <CButton onClick={()=>this.handlePlaceOrder()} style={{ marginTop: "1rem" }} color="success">
+                  <CButton
+                    onClick={() => this.handlePlaceOrder()}
+                    style={{ marginTop: "1rem" }}
+                    color="success"
+                  >
                     Place Order
                   </CButton>
                 </CCardBody>
