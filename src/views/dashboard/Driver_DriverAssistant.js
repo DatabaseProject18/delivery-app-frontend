@@ -61,7 +61,7 @@ class MyTrips extends Component {
   getDataFromDB = async () => {
     let data = {
       type: this.state.userType,
-      date: "2021-02-22",
+      date: moment(new Date()).format("YYYY-MM-DD"),
       isPast: this.state.isPastTruckTrip,
       [`${this.state.userType}_id`]: isLogin()[`${this.state.userType}_id`],
     };
