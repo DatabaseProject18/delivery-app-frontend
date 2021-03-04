@@ -60,6 +60,7 @@ class NewSingleOrderDetails extends Component {
             const data = trainsRes.result.data.multiple;
             this.setState({trains: data})
             this.state.sendTrainId = this.state.trains[0].train_id;
+            console.log("************trains*******",this.state.trains)
         } else {
             if (trainsRes.result.error.single)
                 toast.error(trainsRes.result.error.single);
@@ -89,6 +90,10 @@ class NewSingleOrderDetails extends Component {
             if (res.result.error.single)
                 toast.error(res.result.error.single);
         }
+    };
+
+    goBack = () => {
+        this.props.history.push(`/my/dashboard`);
     };
 
     shipOrder = async () => {
@@ -184,7 +189,7 @@ class NewSingleOrderDetails extends Component {
                                     <CLabel><b>Total Volume</b></CLabel>
                                 </CCol>
                                 <CCol xs="12" md="9">
-                                    <p className="form-control-static">{totalVolume}</p>
+                                    <p className="form-control-static">{totalVolume/1000000} m*m*m</p>
                                 </CCol>
                             </CFormGroup>
                         </CCardBody>
@@ -215,6 +220,15 @@ class NewSingleOrderDetails extends Component {
                                             );
                                         })}
                                     </CSelect>
+
+                                    {this.state.sendTrainId > 0 && (
+                                        <p className="text-muted">
+                                            {`Train Capacity : ${
+                                                trains.find((e) => e.train_id == this.state.sendTrainId)
+                                                    .train_capacity
+                                            }  m*m*m`}
+                                        </p>
+                                    )}
 
                                 </CFormGroup>
 
@@ -254,6 +268,11 @@ class NewSingleOrderDetails extends Component {
                                      size="mm"
                                      color="danger"
                                      onClick={() => {this.rejectOrder();}}> <b>Reject Order</b></CButton>
+                            <CButton type="reset"
+                                     shape="pill"
+                                     size="mm"
+                                     color="dark"
+                                     onClick={() => {this.goBack();}}> <b>Done</b></CButton>
                         </CCardFooter>
                     </CCard>
                 </CCol>
